@@ -1,9 +1,13 @@
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const path = require('path');
+// const path = require('path');
+// const webpack = require('webpack');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+import path from 'path';
+import webpack from 'webpack';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
-module.exports = {
+const config = {
   mode: 'development',
   entry: './src/index.tsx',
   output: {
@@ -54,3 +58,4 @@ module.exports = {
     open: true,
   },
 };
+export default config;
