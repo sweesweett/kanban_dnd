@@ -9,14 +9,15 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": false,
-    "noEmit": true,
+    "isolatedModules": true,
     "jsx": "react-jsx",
     "outDir": "./dist/",
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "declaration": true,
+    "emitDeclarationOnly": true
   },
   "include": ["src"]
 }
