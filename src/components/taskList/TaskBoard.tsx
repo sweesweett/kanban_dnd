@@ -22,4 +22,5 @@ const TaskListWrapper = styled.div`
   display: flex;
   gap: 30px;
 `;
+
 export default TaskBoard;
