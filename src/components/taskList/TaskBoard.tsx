@@ -4,7 +4,7 @@ import TaskTitleForm from './TaskTitleForm';
 const TaskBoard = () => {
   return (
     <TaskBoardWrapper>
-      <TaskTitleForm />
+      <TaskTitleForm size={24} />
       <TaskListWrapper>
         <TaskList />
         <TaskList />
@@ -16,7 +16,6 @@ const TaskBoard = () => {
 const TaskBoardWrapper = styled.section`
   margin: 50px 30px;
   min-height: 80vh;
-  background-color: rgba(255, 255, 255, 0.4);
 `;
 const TaskListWrapper = styled.div`
   margin: 20px;

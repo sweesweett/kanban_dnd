@@ -1,21 +1,28 @@
 import { FormEvent } from 'react';
 import styled from 'styled-components';
 
-const TaskTitleForm = () => {
+const TaskTitleForm = ({ size }: { size: number }) => {
+  // event: Promise<void>;
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
   return (
-    <form onSubmit={submitHandler}>
-      <TitleInput type="text" defaultValue={'테스트중이야요'} />
-    </form>
+    <TitleForm onSubmit={submitHandler}>
+      <TitleInput type="text" size={size} defaultValue={'칸반보드이름 여기'} />
+    </TitleForm>
   );
 };
 
-const TitleInput = styled.input`
-  margin: 20px;
+const TitleForm = styled.form`
   display: inline-block;
-  font-size: 20px;
+  width: 90%;
+  box-sizing: border-box;
+`;
+
+const TitleInput = styled.input<{ size: number }>`
+  margin: 20px 12px;
+  display: inline-block;
+  font-size: ${({ size }) => (size ? size : 16)}px;
   font-weight: 700;
 
   :focus {
