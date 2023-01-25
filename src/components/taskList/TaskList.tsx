@@ -2,18 +2,19 @@ import styled from 'styled-components';
 import TaskItem, { CircleIcon } from './TaskItem';
 import TaskTitleForm from './TaskTitleForm';
 import AddTask from './AddTask';
-const TaskList = () => {
+import { ListContent } from '../../types/lists';
+const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
   const dummy = [1, 2, 3, 4, 5, 6, 7, 8];
   return (
     <TaskListContainer>
       <TaskTitleInfo>
-        <CountBadge>{dummy.length}</CountBadge>
-        <TaskTitleForm size={16} />
+        <CountBadge>{list.length}</CountBadge>
+        <TaskTitleForm size={16} title={title} />
       </TaskTitleInfo>
 
       <TaskListUl>
-        {dummy.map((item) => (
-          <TaskItem />
+        {list.map((item) => (
+          <TaskItem key={item.id} title={item.title} manager={item.manager} />
         ))}
       </TaskListUl>
       <AddTask textContent="Add a card" status={'task'} />

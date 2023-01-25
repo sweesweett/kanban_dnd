@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-const TaskItem = () => {
+const TaskItem = ({ title, manager }: { title: string; manager: string | null }) => {
   return (
     <TaskLi draggable>
-      <span>테스트중~</span>
-      <CircleIcon>윤</CircleIcon>
+      <span>{title}</span>
+      {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
     </TaskLi>
   );
 };

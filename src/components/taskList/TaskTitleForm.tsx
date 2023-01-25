@@ -1,14 +1,14 @@
 import { FormEvent } from 'react';
 import styled from 'styled-components';
 
-const TaskTitleForm = ({ size }: { size: number }) => {
+const TaskTitleForm = ({ size,title }: { size: number; title:string }) => {
   // event: Promise<void>;
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
   return (
     <TitleForm onSubmit={submitHandler}>
-      <TitleInput type="text" size={size} defaultValue={'칸반보드이름 여기'} />
+      <TitleInput type="text" size={size} defaultValue={title} />
     </TitleForm>
   );
 };
