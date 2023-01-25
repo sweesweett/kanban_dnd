@@ -20,13 +20,14 @@ const TitleForm = styled.form`
 `;
 
 const TitleInput = styled.input<{ size: number }>`
-  margin: 20px 12px;
+  margin: 12px;
   display: inline-block;
   font-size: ${({ size }) => (size ? size : 16)}px;
   font-weight: 700;
-
+  cursor: pointer;
   :focus {
     background-color: #fff;
+    cursor: text;
   }
 `;
 export default TaskTitleForm;

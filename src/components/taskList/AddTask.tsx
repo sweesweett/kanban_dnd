@@ -12,8 +12,8 @@ const AddTask = ({ status, textContent }: { status: string; textContent: string 
 const AddBtn = styled.button`
   border-radius: 3px;
   padding: 12px;
-  width: calc(100% - 16px);
-  margin: 12px auto 0;
+  width: calc(100% - 8px);
+  margin: 4px auto 0;
   box-sizing: border-box;
   text-align: left;
   display: flex;

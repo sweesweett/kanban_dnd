@@ -3,11 +3,11 @@ import TaskItem, { CircleIcon } from './TaskItem';
 import TaskTitleForm from './TaskTitleForm';
 import AddTask from './AddTask';
 const TaskList = () => {
-  const dummy = [1, 2];
+  const dummy = [1, 2, 3, 4, 5, 6, 7, 8];
   return (
     <TaskListContainer>
       <TaskTitleInfo>
-        <CountBadge>5</CountBadge>
+        <CountBadge>{dummy.length}</CountBadge>
         <TaskTitleForm size={16} />
       </TaskTitleInfo>
 

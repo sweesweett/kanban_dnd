@@ -3,14 +3,14 @@ const TaskItem = () => {
   return (
     <TaskLi draggable>
       <span>테스트중~</span>
-      {/* <CircleIcon>윤</CircleIcon> */}
+      <CircleIcon>윤</CircleIcon>
     </TaskLi>
   );
 };
 const TaskLi = styled.li`
   border-radius: 8px;
   padding: 12px;
-  margin: 12px 8px;
+  margin: 12px 4px;
   background-color: white;
   display: flex;
   flex-direction: column;
@@ -20,8 +20,11 @@ const TaskLi = styled.li`
 `;
 export const CircleIcon = styled.div`
   border-radius: 50%;
-  background-color: #a8edea;
+  background-color: #77d8d4;
   align-self: flex-end;
   padding: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
 `;
 export default TaskItem;
