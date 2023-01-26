@@ -1,14 +1,17 @@
 import { FormEvent } from 'react';
 import styled from 'styled-components';
 
-const TaskTitleForm = ({ size,title }: { size: number; title:string }) => {
+const TaskTitleForm = ({ size, title, event }: { size: number; title: string; event: any }) => {
   // event: Promise<void>;
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const title = e.currentTarget.titleVal.value;
+    event(title);
+    e.currentTarget.titleVal.blur();
   };
   return (
     <TitleForm onSubmit={submitHandler}>
-      <TitleInput type="text" size={size} defaultValue={title} />
+      <TitleInput name="titleVal" type="text" size={size} defaultValue={title} />
     </TitleForm>
   );
 };

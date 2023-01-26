@@ -25,4 +25,9 @@ export const GET_ITEM = gql`
     }
   }
 `;
+export const PUT_LIST_TITLE = gql`
+  query PUT_LIST_TITLE($state: string) {
+    state
+  }
+`;
 export default GET_LISTS;

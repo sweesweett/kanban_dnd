@@ -3,13 +3,23 @@ import TaskItem, { CircleIcon } from './TaskItem';
 import TaskTitleForm from './TaskTitleForm';
 import AddTask from './AddTask';
 import { ListContent } from '../../types/lists';
+import { graphqlFetcher, Querykeys } from '../../queryClient';
+import { useMutation, useQuery } from 'react-query';
+import { PUT_LIST_TITLE } from '../../graphql/lists';
+import { List } from '../../types/lists';
+
 const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
-  const dummy = [1, 2, 3, 4, 5, 6, 7, 8];
+  const fetcher = useMutation((newState: string) => graphqlFetcher(PUT_LIST_TITLE, { state: title, newState }));
+
+  const ChangeTitleHandler = (newState: string) => {
+    fetcher.mutate(newState);
+  };
+
   return (
     <TaskListContainer>
       <TaskTitleInfo>
         <CountBadge>{list.length}</CountBadge>
-        <TaskTitleForm size={16} title={title} />
+        <TaskTitleForm size={16} title={title} event={ChangeTitleHandler} />
       </TaskTitleInfo>
 
       <TaskListUl>
