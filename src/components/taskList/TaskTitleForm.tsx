@@ -1,25 +1,45 @@
-import { FormEvent } from 'react';
+import { FocusEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 
-const TaskTitleForm = () => {
+const TaskTitleForm = ({ size, title, event }: { size: number; title: string; event: any }) => {
+  // event: Promise<void>;
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const title = e.currentTarget.titleVal.value;
+    event(title);
+    e.currentTarget.titleVal.blur();
+    //TODO:리액트 쿼리 useMutation 사용방법 더 찾아보고 리팩토링 하기
+  };
+  const blurHandler = (e: FocusEvent<HTMLInputElement, Element>) => {
+    if (e.target.value === title) {
+      return;
+    } else {
+      event(e.target.value);
+      //TODO:리액트 쿼리 useMutation 사용방법 더 찾아보고 리팩토링 하기
+    }
   };
   return (
-    <form onSubmit={submitHandler}>
-      <TitleInput type="text" defaultValue={'테스트중이야요'} />
-    </form>
+    <TitleForm onSubmit={submitHandler}>
+      <TitleInput name="titleVal" onBlur={blurHandler} type="text" size={size} defaultValue={title} />
+    </TitleForm>
   );
 };
 
-const TitleInput = styled.input`
-  margin: 20px;
+const TitleForm = styled.form`
   display: inline-block;
-  font-size: 20px;
-  font-weight: 700;
+  width: 90%;
+  box-sizing: border-box;
+`;
 
+const TitleInput = styled.input<{ size: number }>`
+  margin: 12px;
+  display: inline-block;
+  font-size: ${({ size }) => (size ? size : 16)}px;
+  font-weight: 700;
+  cursor: pointer;
   :focus {
     background-color: #fff;
+    cursor: text;
   }
 `;
 export default TaskTitleForm;
