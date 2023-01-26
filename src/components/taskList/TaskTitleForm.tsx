@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FocusEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 
 const TaskTitleForm = ({ size, title, event }: { size: number; title: string; event: any }) => {
@@ -8,10 +8,19 @@ const TaskTitleForm = ({ size, title, event }: { size: number; title: string; ev
     const title = e.currentTarget.titleVal.value;
     event(title);
     e.currentTarget.titleVal.blur();
+    //TODO:리액트 쿼리 useMutation 사용방법 더 찾아보고 리팩토링 하기
+  };
+  const blurHandler = (e: FocusEvent<HTMLInputElement, Element>) => {
+    if (e.target.value === title) {
+      return;
+    } else {
+      event(e.target.value);
+      //TODO:리액트 쿼리 useMutation 사용방법 더 찾아보고 리팩토링 하기
+    }
   };
   return (
     <TitleForm onSubmit={submitHandler}>
-      <TitleInput name="titleVal" type="text" size={size} defaultValue={title} />
+      <TitleInput name="titleVal" onBlur={blurHandler} type="text" size={size} defaultValue={title} />
     </TitleForm>
   );
 };
