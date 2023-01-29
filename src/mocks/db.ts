@@ -2,7 +2,7 @@ import { List } from '../types/lists';
 
 export const lists: List[] = [
   {
-    state: 'Todo',
+    state: 'TO-DO',
     list: [
       {
         id: 1,
@@ -47,7 +47,7 @@ export const lists: List[] = [
     ],
   },
   {
-    state: 'Doing',
+    state: 'IN_PROGRESS',
     list: [
       {
         id: 6,
@@ -92,7 +92,7 @@ export const lists: List[] = [
     ],
   },
   {
-    state: 'Done',
+    state: 'DONE',
     list: [
       {
         id: 11,

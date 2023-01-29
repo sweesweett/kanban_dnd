@@ -1,13 +1,14 @@
+import { FormEvent } from 'react';
 import styled from 'styled-components';
 import Input from './Input';
 const Modal = () => {
+  const submitHandler = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <ModalContainer>
-      <Form
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
+      <Form onSubmit={submitHandler}>
         <Input
           type="text"
           name="title"
@@ -21,7 +22,7 @@ const Modal = () => {
           label="마감일"
           options={{ min: new Date().toISOString().slice(0, -8) }}
         ></Input>
-        <Input type="text" options={{ placeholder: '담당자 찾기' }}></Input>
+        <Input type="text" name="manager" label="담당자" options={{ placeholder: '담당자 찾기' }}></Input>
         <div>드롭다운 scroll 통신</div>
         <div>
           <button type="submit">저장</button>
@@ -37,12 +38,23 @@ const ModalContainer = styled.div`
   min-width: 200px;
   max-width: 800px;
   border-radius: 8px;
+  padding: 20px;
+  animation: open 0.3s ease-out 1 forwards;
+  @keyframes open {
+    0% {
+      transform: scale(0.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;
 const Form = styled.form`
   width: 90%;
   margin: 0 auto;
-  padding: 20px;
+
   display: flex;
   flex-direction: column;
 `;
+const Button = styled.button``;
 export default Modal;
