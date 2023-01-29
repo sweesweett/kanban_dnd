@@ -4,12 +4,36 @@ import { useNavigate } from 'react-router-dom';
 const CloseBar = ({ modalTitle }: { modalTitle: string }) => {
   const navigate = useNavigate();
   return (
-    <div>
+    <CloseBarWrapper>
       <span>{modalTitle}</span>
-      <button type="button" onClick={() => navigate('/')}>
-        <IoClose />
-      </button>
-    </div>
+      <CloseBtn type="button" onClick={() => navigate('/')}>
+        <IoClose size={24} />
+      </CloseBtn>
+    </CloseBarWrapper>
   );
 };
+const CloseBarWrapper = styled.div`
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 8px;
+  font-weight: 700;
+  background-color: #f2f2f2;
+  border-radius: 4px 4px 0 0;
+`;
+const CloseBtn = styled.button`
+  position: absolute;
+  right: 10px;
+  text-align: center;
+
+  :hover,
+  :active {
+    transform: scale(1.1);
+  }
+`;
 export default CloseBar;

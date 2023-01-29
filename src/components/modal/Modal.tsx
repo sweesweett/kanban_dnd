@@ -39,7 +39,7 @@ const ModalContainer = styled.div`
   width: 40vw;
   min-width: 200px;
   max-width: 800px;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 20px;
   animation: open 0.3s ease-out 1 forwards;
   @keyframes open {
@@ -53,10 +53,10 @@ const ModalContainer = styled.div`
 `;
 const Form = styled.form`
   width: 90%;
-  margin: 0 auto;
-
+  margin: 20px auto 0;
   display: flex;
   flex-direction: column;
+  gap: 12px;
 `;
 const Button = styled.button``;
 export default Modal;
