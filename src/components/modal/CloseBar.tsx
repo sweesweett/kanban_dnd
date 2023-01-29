@@ -12,6 +12,7 @@ const CloseBar = ({ modalTitle }: { modalTitle: string }) => {
     </CloseBarWrapper>
   );
 };
+
 const CloseBarWrapper = styled.div`
   width: 100%;
   height: 40px;
