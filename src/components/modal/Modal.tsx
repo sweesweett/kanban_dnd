@@ -1,6 +1,7 @@
 import { FormEvent } from 'react';
 import styled from 'styled-components';
 import Input from './Input';
+import CloseBar from './CloseBar';
 const Modal = () => {
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -8,6 +9,7 @@ const Modal = () => {
 
   return (
     <ModalContainer>
+      <CloseBar modalTitle={'add a card'} />
       <Form onSubmit={submitHandler}>
         <Input
           type="text"
