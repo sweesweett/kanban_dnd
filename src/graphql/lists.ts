@@ -13,9 +13,8 @@ const GET_LISTS = gql`
   }
 `;
 export const GET_ITEM = gql`
-  query GET_LIST($id: string, $state: string) {
-    state
-    list {
+  query GET_ITEM($id: string, $state: string) {
+    item(id: $id) {
       id
       order
       title

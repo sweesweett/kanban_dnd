@@ -3,34 +3,67 @@ import styled from 'styled-components';
 import Input from './Input';
 import CloseBar from './CloseBar';
 import { useNavigate } from 'react-router-dom';
+import { graphqlFetcher, Querykeys } from '../../queryClient';
+import { useQuery } from 'react-query';
+import { GET_ITEM } from '../../graphql/lists';
+import { ListContent } from '../../types/lists';
+const initialState = {
+  item: {
+    id: null,
+    order: null,
+    title: '',
+    content: '',
+    endDate: '',
+    manager: '',
+  },
+};
 const Modal = () => {
+  const mode: 'add' | 'edit' = 'edit';
+  const [id, state] = [1, 'TO-DO'];
   const navigate = useNavigate();
-
+  const data =
+    mode === 'add'
+      ? initialState
+      : useQuery<{ item: ListContent }>([Querykeys.LISTS, 1, 'TO-DO'], () => graphqlFetcher(GET_ITEM, { id, state }))
+          .data;
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
-
   return (
     <ModalContainer>
-      <CloseBar modalTitle={'Add a card'} />
+      <CloseBar modalTitle={mode === 'add' ? 'Add a card' : 'Edit a card'} />
       <Form onSubmit={submitHandler}>
         <Input
           type="text"
           name="title"
           label="제목"
-          options={{ defaultValue: '', placeholder: '제목을 입력해 주세요', required: true }}
+          options={{ defaultValue: data?.item.title, placeholder: '제목을 입력해 주세요', required: true }}
         ></Input>
-        상태
+        <label htmlFor="status">상태</label>
+        <select defaultValue={state} name="status" id="status" required>
+          <option value="title">테스트1</option>
+          <option value={state}>테스트2</option>
+          <option value="title">테스트3</option>
+        </select>
         <label htmlFor="content">내용</label>
-        <Textarea name="content" />
+        <Textarea name="content" defaultValue={data?.item.content} required />
         <Input
           type="datetime-local"
           name="endDate"
           label="마감일"
-          options={{ min: new Date().toISOString().slice(0, -8) }}
+          options={{ min: new Date().toISOString().slice(0, -8), defaultValue: data?.item.endDate }}
         ></Input>
         <SearchManagerWrapper>
-          <Input type="text" name="manager" label="담당자" options={{ placeholder: '담당자 찾기' }}></Input>
+          <Input
+            type="text"
+            name="manager"
+            label="담당자"
+            options={{ placeholder: '담당자 찾기', defaultValue: data?.item.manager }}
+          ></Input>
+          {/* TODO: 담당자 찾기 리액트쿼리로 데이터 받아서 list에 뿌리기
+          선택 시, manager input value 그 값으로 설정- 전역관리하거나 modal에서 관리 해야함
+          */}
+
           <DropUl>
             <DropLi>테스트</DropLi>
             <DropLi>테스트</DropLi>
