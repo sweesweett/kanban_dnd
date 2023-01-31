@@ -4,7 +4,7 @@ const Input = ({ type, name, label, options }: { type: string; name: string; lab
   return (
     <InputWrapper>
       <Label htmlFor={name}>{label}</Label>
-      <InputEl type={type} name={name} {...options} />
+      <InputEl id={name} type={type} name={name} {...options} />
     </InputWrapper>
   );
 };

@@ -9,7 +9,7 @@ export const lists: List[] = [
         order: 0,
         title: 'asd',
         content: 'asd',
-        endDate: '2023-01-04',
+        endDate: '2023-02-20T10:00',
         manager: '은우',
       },
       {
@@ -17,7 +17,7 @@ export const lists: List[] = [
         order: 1,
         title: 'zxc',
         content: 'zxc',
-        endDate: '2023-01-04',
+        endDate: '2023-02-10T10:00',
         manager: null,
       },
       {
@@ -25,7 +25,7 @@ export const lists: List[] = [
         order: 2,
         title: 'qwe',
         content: 'qwe',
-        endDate: '2023-01-04',
+        endDate: '2023-02-21T10:00',
         manager: '윤진',
       },
       {
@@ -33,7 +33,7 @@ export const lists: List[] = [
         order: 3,
         title: 'fgh',
         content: 'fgh',
-        endDate: '2023-01-04',
+        endDate: '2023-02-04T10:00',
         manager: '빵상',
       },
       {
@@ -41,7 +41,7 @@ export const lists: List[] = [
         order: 0,
         title: 'rty',
         content: 'rty',
-        endDate: '2023-01-04',
+        endDate: '2023-02-20T12:00',
         manager: null,
       },
     ],
@@ -54,7 +54,7 @@ export const lists: List[] = [
         order: 0,
         title: 'asd',
         content: 'asd',
-        endDate: '2023-01-04',
+        endDate: '2023-02-01T10:00',
         manager: '아이스티',
       },
       {
@@ -62,7 +62,7 @@ export const lists: List[] = [
         order: 1,
         title: 'zxc',
         content: 'zxc',
-        endDate: '2023-01-04',
+        endDate: '2023-02-02T10:00',
         manager: '제로',
       },
       {
@@ -70,7 +70,7 @@ export const lists: List[] = [
         order: 2,
         title: 'qwe',
         content: 'qwe',
-        endDate: '2023-01-04',
+        endDate: '2023-02-05T10:00',
         manager: null,
       },
       {
@@ -78,7 +78,7 @@ export const lists: List[] = [
         order: 3,
         title: 'fgh',
         content: 'fgh',
-        endDate: '2023-01-04',
+        endDate: '2023-02-08T10:00',
         manager: '뚜껑',
       },
       {
@@ -86,7 +86,7 @@ export const lists: List[] = [
         order: 4,
         title: 'rty',
         content: 'rty',
-        endDate: '2023-01-04',
+        endDate: '2023-02-09T10:00',
         manager: null,
       },
     ],
@@ -99,7 +99,7 @@ export const lists: List[] = [
         order: 0,
         title: 'asd',
         content: 'asd',
-        endDate: '2023-01-04',
+        endDate: '2023-02-101T10:00',
         manager: '아이스티',
       },
       {
@@ -107,7 +107,7 @@ export const lists: List[] = [
         order: 1,
         title: 'zxc',
         content: 'zxc',
-        endDate: '2023-01-04',
+        endDate: '2023-02-13T10:00',
         manager: '제로',
       },
       {
@@ -115,7 +115,7 @@ export const lists: List[] = [
         order: 2,
         title: 'qwe',
         content: 'qwe',
-        endDate: '2023-01-04',
+        endDate: '2023-02-15T10:00',
         manager: '바나나',
       },
       {
@@ -123,7 +123,7 @@ export const lists: List[] = [
         order: 3,
         title: 'fgh',
         content: 'fgh',
-        endDate: '2023-01-04',
+        endDate: '2023-02-01T10:00',
         manager: '뚜껑',
       },
       {
@@ -131,7 +131,7 @@ export const lists: List[] = [
         order: 4,
         title: 'rty',
         content: 'rty',
-        endDate: '2023-01-04',
+        endDate: '2023-02-14T10:00',
         manager: null,
       },
     ],

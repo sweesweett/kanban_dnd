@@ -25,9 +25,21 @@ export const handlers = [
     }
   }),
 
-  // graphql.query(GET_LIST, (req, res, ctx) => {
-  //   // console.log(req.variables.id);
-  //   let idx = .findIndex((el) => el.id === req.variables.id);
-  //   return res(ctx.data(mock_products[idx]));
-  // }),
+  graphql.query(GET_ITEM, (req, res, ctx) => {
+    const { id: idx, state: itemState } = req.variables;
+    const stateIdx = lists.findIndex(({ state }) => state === itemState);
+    if (stateIdx > -1) {
+      const id = lists[stateIdx].list.findIndex(({ id }) => id === idx);
+      if (id === -1) {
+        return res(ctx.status(404, 'Not found'));
+      }
+      return res(
+        ctx.data({
+          state: itemState,
+          item: lists[stateIdx].list[id],
+        }),
+      );
+    }
+    return res(ctx.status(404, 'Not found'));
+  }),
 ];
