@@ -29,7 +29,7 @@ export const handlers = [
     const { id: idx, state: itemState } = req.variables;
     const stateIdx = lists.findIndex(({ state }) => state === itemState);
     if (stateIdx > -1) {
-      const id = lists[stateIdx].list.findIndex(({ id }) => id === idx);
+      const id = lists[stateIdx].list.findIndex(({ id }) => id === Number(idx));
       if (id === -1) {
         return res(ctx.status(404, 'Not found'));
       }
