@@ -7,6 +7,9 @@ import { graphqlFetcher, Querykeys } from '../../queryClient';
 import { useQuery } from 'react-query';
 import { GET_ITEM } from '../../graphql/lists';
 import { ListContent } from '../../types/lists';
+import { useRecoilValue } from 'recoil';
+import { stateAtom } from '../../store';
+import useSearchParams from '../../hooks/useSearchParams';
 const initialState = {
   item: {
     id: null,
@@ -18,14 +21,18 @@ const initialState = {
   },
 };
 const Modal = () => {
-  const mode: 'add' | 'edit' = 'edit';
-  const [id, state] = [1, 'TO-DO'];
+  const { mode, state, id } = useSearchParams(['mode', 'state', 'id']);
   const navigate = useNavigate();
-  const data =
-    mode === 'add'
-      ? initialState
-      : useQuery<{ item: ListContent }>([Querykeys.LISTS, 1, 'TO-DO'], () => graphqlFetcher(GET_ITEM, { id, state }))
-          .data;
+  const data = useQuery<{ item: ListContent }>(
+    [Querykeys.ITEM, id, state],
+    () => graphqlFetcher(GET_ITEM, { id, state }),
+    {
+      enabled: !!id,
+    },
+  ).data;
+
+  const stateSelect = useRecoilValue(stateAtom);
+
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
@@ -41,9 +48,11 @@ const Modal = () => {
         ></Input>
         <label htmlFor="status">상태</label>
         <select defaultValue={state} name="status" id="status" required>
-          <option value="title">테스트1</option>
-          <option value={state}>테스트2</option>
-          <option value="title">테스트3</option>
+          {stateSelect?.map((option) => (
+            <option value={option} key={option}>
+              {option}
+            </option>
+          ))}
         </select>
         <label htmlFor="content">내용</label>
         <Textarea name="content" defaultValue={data?.item.content} required />

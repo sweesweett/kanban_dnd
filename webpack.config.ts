@@ -10,6 +10,7 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 const config = {
   mode: 'development',
   entry: './src/index.tsx',
+  devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[hash].bundle.js',
