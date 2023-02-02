@@ -29,4 +29,9 @@ export const PUT_LIST_TITLE = gql`
     state
   }
 `;
+export const GET_MANAGER = gql`
+  query GET_MANAGER($searchString: string) {
+    manangers
+  }
+`;
 export default GET_LISTS;

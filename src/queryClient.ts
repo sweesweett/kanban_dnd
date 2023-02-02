@@ -27,4 +27,5 @@ export const graphqlFetcher = (query: RequestDocument, variables = {}) => reques
 export const Querykeys = {
   LISTS: 'LISTS',
   ITEM: 'ITEM',
+  MANAGER: 'MANAGER',
 };

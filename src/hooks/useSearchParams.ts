@@ -5,7 +5,7 @@ interface AnyObj {
 }
 
 const useSearchParams = (arr: string[]) => {
-  const [newObj, setNewObj] = useState({});
+  const [newObj, setNewObj] = useState<AnyObj>({});
 
   useEffect(() => {
     const obj: AnyObj = {};
@@ -15,7 +15,6 @@ const useSearchParams = (arr: string[]) => {
       else obj[param] = null;
     });
     setNewObj(obj);
-    // console.log('sibal', { ...obj });
   }, [location.search]);
 
   return { ...newObj };

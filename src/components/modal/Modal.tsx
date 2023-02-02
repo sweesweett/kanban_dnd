@@ -10,35 +10,24 @@ import { ListContent } from '../../types/lists';
 import { useRecoilValue } from 'recoil';
 import { stateAtom } from '../../store';
 import useSearchParams from '../../hooks/useSearchParams';
-const initialState = {
-  item: {
-    id: null,
-    order: null,
-    title: '',
-    content: '',
-    endDate: '',
-    manager: '',
-  },
-};
+import SearchManager from './SearchManager';
 const Modal = () => {
   const { mode, state, id } = useSearchParams(['mode', 'state', 'id']);
   const navigate = useNavigate();
-  const data = useQuery<{ item: ListContent }>(
+  const { data } = useQuery<{ item: ListContent }>(
     [Querykeys.ITEM, id, state],
     () => graphqlFetcher(GET_ITEM, { id, state }),
     {
       enabled: !!id,
     },
-  ).data;
-
+  );
   const stateSelect = useRecoilValue(stateAtom);
-
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
   return (
     <ModalContainer>
-      <CloseBar modalTitle={mode === 'add' ? 'Add a card' : 'Edit a card'} />
+      <CloseBar modalTitle={mode === 'edit' ? 'Edit a card' : 'Add a card'} />
       <Form onSubmit={submitHandler}>
         <Input
           type="text"
@@ -47,7 +36,7 @@ const Modal = () => {
           options={{ defaultValue: data?.item.title, placeholder: '제목을 입력해 주세요', required: true }}
         ></Input>
         <label htmlFor="status">상태</label>
-        <select defaultValue={state} name="status" id="status" required>
+        <select defaultValue={state ? state : ''} name="status" id="status" required>
           {stateSelect?.map((option) => (
             <option value={option} key={option}>
               {option}
@@ -62,25 +51,7 @@ const Modal = () => {
           label="마감일"
           options={{ min: new Date().toISOString().slice(0, -8), defaultValue: data?.item.endDate }}
         ></Input>
-        <SearchManagerWrapper>
-          <Input
-            type="text"
-            name="manager"
-            label="담당자"
-            options={{ placeholder: '담당자 찾기', defaultValue: data?.item.manager }}
-          ></Input>
-          {/* TODO: 담당자 찾기 리액트쿼리로 데이터 받아서 list에 뿌리기
-          선택 시, manager input value 그 값으로 설정- 전역관리하거나 modal에서 관리 해야함
-          */}
-
-          <DropUl>
-            <DropLi>테스트</DropLi>
-            <DropLi>테스트</DropLi>
-            <DropLi>테스트</DropLi>
-            <DropLi>테스트</DropLi>
-            <DropLi>테스트</DropLi>
-          </DropUl>
-        </SearchManagerWrapper>
+        <SearchManager defaultValue={data?.item.manager} />
         <ModalBtns>
           <Button color={'#a8edea'} type="submit">
             저장
@@ -126,28 +97,7 @@ const Textarea = styled.textarea`
     outline: 2px solid rgba(0, 0, 0, 0.3);
   }
 `;
-const SearchManagerWrapper = styled.div``;
-const DropUl = styled.ul`
-  margin-top: 12px;
-  height: 40px;
-  width: 100%;
-  overflow-x: auto;
-`;
-const DropLi = styled.li`
-  display: inline-block;
-  margin-right: 8px;
-  padding: 4px;
-  border-radius: 15px;
-  font-size: 14px;
-  background-color: white;
-  font-weight: 500;
-  border: 3px solid #fed6e3;
-  cursor: pointer;
-  :hover,
-  :active {
-    border: 3px solid #ffb2cb;
-  }
-`;
+
 const ModalBtns = styled.div`
   align-self: center;
 `;
