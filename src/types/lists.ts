@@ -11,3 +11,11 @@ export interface List {
   state: string;
   list: ListContent[];
 }
+
+interface Manager {
+  id: number;
+  name: string;
+}
+export interface Managers {
+  managers: Manager[];
+}

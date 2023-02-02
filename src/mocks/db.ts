@@ -2,7 +2,7 @@ import { List } from '../types/lists';
 
 export const lists: List[] = [
   {
-    state: 'TO-DO',
+    state: 'TO_DO',
     list: [
       {
         id: 1,
@@ -137,7 +137,7 @@ export const lists: List[] = [
     ],
   },
 ];
-export const MANAGER = [
+export const managers = [
   {
     id: 1,
     name: '아이스티',
