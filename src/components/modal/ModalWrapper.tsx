@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import Modal from './Modal';
+
 const ModalWrapper = () => {
   return (
     <>
-      <Bg></Bg>
+      <Bg />
       <ModalContent>
         <Modal />
       </ModalContent>

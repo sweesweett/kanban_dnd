@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Input = ({ type, name, label, options }: { type: string; name: string; label: string; options: {} }) => {
+const Input = ({ type, name, label, options }: { type: string; name: string; label: string; options: object }) => {
   return (
     <Label htmlFor={name}>
       {label}
@@ -11,8 +11,6 @@ const Input = ({ type, name, label, options }: { type: string; name: string; lab
 
 const Label = styled.label`
   font-weight: 700;
-
-  /* width: 80px; */
 `;
 const InputEl = styled.input`
   margin-left: 20px;
@@ -21,7 +19,6 @@ const InputEl = styled.input`
     background-color: rgba(255, 255, 255, 0.8);
     outline: 2px solid rgba(0, 0, 0, 0.3);
   }
-  /* width: 100%; */
 `;
 
 export default Input;

@@ -5,17 +5,16 @@ const TaskTitleForm = ({ size, title, event }: { size: number; title: string; ev
   // event: Promise<void>;
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const title = e.currentTarget.titleVal.value;
+    const title = e.currentTarget.titleVal.value as string;
     event(title);
     e.currentTarget.titleVal.blur();
-    //TODO:리액트 쿼리 useMutation 사용방법 더 찾아보고 리팩토링 하기
+    // TODO:리액트 쿼리 useMutation 사용방법 더 찾아보고 리팩토링 하기
   };
   const blurHandler = (e: FocusEvent<HTMLInputElement, Element>) => {
     if (e.target.value === title) {
-      return;
     } else {
       event(e.target.value);
-      //TODO:리액트 쿼리 useMutation 사용방법 더 찾아보고 리팩토링 하기
+      // TODO:리액트 쿼리 useMutation 사용방법 더 찾아보고 리팩토링 하기
     }
   };
   return (
@@ -34,7 +33,7 @@ const TitleForm = styled.form`
 const TitleInput = styled.input<{ size: number }>`
   margin: 12px;
   display: inline-block;
-  font-size: ${({ size }) => (size ? size : 16)}px;
+  font-size: ${({ size }) => size || 16}px;
   font-weight: 700;
   cursor: pointer;
   :focus {

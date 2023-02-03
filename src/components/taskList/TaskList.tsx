@@ -1,12 +1,11 @@
 import styled from 'styled-components';
-import TaskItem, { CircleIcon } from './TaskItem';
+import TaskItem from './TaskItem';
 import TaskTitleForm from './TaskTitleForm';
 import AddTask from './AddTask';
 import { ListContent } from '../../types/lists';
-import { graphqlFetcher, Querykeys } from '../../queryClient';
-import { useMutation, useQuery } from 'react-query';
+import { graphqlFetcher } from '../../queryClient';
+import { useMutation } from 'react-query';
 import { PUT_LIST_TITLE } from '../../graphql/lists';
-import { List } from '../../types/lists';
 
 const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
   const fetcher = useMutation((newState: string) => graphqlFetcher(PUT_LIST_TITLE, { state: title, newState }));
@@ -27,7 +26,7 @@ const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
           <TaskItem key={item.id} title={item.title} manager={item.manager} />
         ))}
       </TaskListUl>
-      <AddTask textContent="Add a card" status={'task'} />
+      <AddTask textContent="Add a card" status="task" />
     </TaskListContainer>
   );
 };

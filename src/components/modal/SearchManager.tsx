@@ -6,8 +6,9 @@ import { GET_MANAGER } from '../../graphql/lists';
 import { Managers } from '../../types/lists';
 import { ChangeEvent, useState, useEffect } from 'react';
 import useDebounce from '../../hooks/useDebounce';
+
 const SearchManager = ({ defaultValue }: { defaultValue: string | undefined | null }) => {
-  const [searchValue, setSearchValue] = useState(defaultValue ? defaultValue : '');
+  const [searchValue, setSearchValue] = useState(defaultValue || '');
   const debounce = useDebounce(searchValue);
   const { data, refetch } = useQuery<Managers>(
     Querykeys.MANAGER,
@@ -20,7 +21,7 @@ const SearchManager = ({ defaultValue }: { defaultValue: string | undefined | nu
     if (debounce) {
       refetch();
     }
-  }, [debounce]);
+  }, [debounce, refetch]);
   return (
     <SearchManagerWrapper>
       <Input
@@ -34,7 +35,7 @@ const SearchManager = ({ defaultValue }: { defaultValue: string | undefined | nu
             setSearchValue(e.target.value);
           },
         }}
-      ></Input>
+      />
 
       <DropUl>
         {!data && searchValue && <span>검색 결과 없음</span>}

@@ -1,8 +1,6 @@
 import { useQuery, useMutation, useQueryClient, QueryClient } from 'react-query';
 import { request, RequestDocument } from 'graphql-request';
 
-// import {getTodos,postTodo} from './my-api'
-type AnyObj = { [key: string]: any };
 export const getClient = (() => {
   let client: QueryClient | null = null;
   return () => {
