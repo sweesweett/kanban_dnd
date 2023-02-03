@@ -15,10 +15,10 @@ const TaskBoard = () => {
   const setState = useSetRecoilState(stateAtom);
   useEffect(() => {
     setState(data ? data?.lists.map((el) => el.state) : []);
-  }, [data]);
+  }, [data, setState]);
   return (
     <TaskBoardWrapper>
-      <TaskTitleForm size={24} title={'칸반보드'} />
+      <TaskTitleForm size={24} title="칸반보드" />
       <TaskListWrapper>
         {data?.lists.map((lists) => (
           <TaskList key={lists.state} title={lists.state} list={lists.list} />

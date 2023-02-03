@@ -1,5 +1,4 @@
 import { gql } from 'graphql-tag';
-import { List } from '../types/lists';
 
 const GET_LISTS = gql`
   query GET_LISTS {

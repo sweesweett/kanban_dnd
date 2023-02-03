@@ -3,15 +3,15 @@ import styled from 'styled-components';
 const Loading = () => {
   return (
     <LoadingWrapper>
-      <LoadingCircle></LoadingCircle>
-      <LoadingCircle></LoadingCircle>
-      <LoadingCircle></LoadingCircle>
+      <LoadingCircle />
+      <LoadingCircle />
+      <LoadingCircle />
     </LoadingWrapper>
   );
 };
 export default Loading;
 
-//TODO: Css 상황에 맞게 prop로 받아서 바꾸기
+// TODO: Css 상황에 맞게 prop로 받아서 바꾸기
 const LoadingWrapper = styled.div`
   position: absolute;
   display: flex;

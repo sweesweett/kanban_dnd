@@ -11,6 +11,7 @@ import { useRecoilValue } from 'recoil';
 import { stateAtom } from '../../store';
 import useSearchParams from '../../hooks/useSearchParams';
 import SearchManager from './SearchManager';
+
 const Modal = () => {
   const { mode, state, id } = useSearchParams(['mode', 'state', 'id']);
   const navigate = useNavigate();
@@ -34,9 +35,9 @@ const Modal = () => {
           name="title"
           label="제목"
           options={{ defaultValue: data?.item.title, placeholder: '제목을 입력해 주세요', required: true }}
-        ></Input>
+        />
         <label htmlFor="status">상태</label>
-        <select defaultValue={state ? state : ''} name="status" id="status" required>
+        <select defaultValue={state || ''} name="status" id="status" required>
           {stateSelect?.map((option) => (
             <option value={option} key={option}>
               {option}
@@ -50,13 +51,13 @@ const Modal = () => {
           name="endDate"
           label="마감일"
           options={{ min: new Date().toISOString().slice(0, -8), defaultValue: data?.item.endDate }}
-        ></Input>
+        />
         <SearchManager defaultValue={data?.item.manager} />
         <ModalBtns>
-          <Button color={'#a8edea'} type="submit">
+          <Button color="#a8edea" type="submit">
             저장
           </Button>
-          <Button color={'#fed6e3'} type="button" onClick={() => navigate('/')}>
+          <Button color="#fed6e3" type="button" onClick={() => navigate('/')}>
             취소
           </Button>
         </ModalBtns>
@@ -106,6 +107,6 @@ const Button = styled.button<{ color: string }>`
   padding: 12px;
   margin: 0 8px 0 10px;
   font-weight: 700;
-  background-color: ${({ color }) => (color ? color : 'none')};
+  background-color: ${({ color }) => color || 'none'};
 `;
 export default Modal;

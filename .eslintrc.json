@@ -2,11 +2,19 @@
   "extends": [
     "airbnb",
     "airbnb/hooks",
-    "react-app",
     "prettier",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:react/jsx-runtime"
   ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": ["./tsconfig.json"]
+  },
+  "plugins": ["@typescript-eslint", "prettier"],
   "env": {
     "browser": true,
     "jasmine": true
@@ -47,7 +55,8 @@
     "import/no-cycle": "off",
     "no-alert": "off",
     "import/no-named-as-default": "off",
-
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "no-shadow": "off",
     "no-unused-expressions": ["warn"],
     "prefer-const": ["warn"],
@@ -60,6 +69,13 @@
         "labelComponents": ["label"],
         "labelAttributes": ["htmlFor"],
         "controlComponents": ["input"]
+      }
+    ],
+    "react/self-closing-comp": [
+      "error",
+      {
+        "component": true,
+        "html": true
       }
     ],
     "import/extensions": [

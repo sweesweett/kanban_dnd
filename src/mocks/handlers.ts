@@ -1,6 +1,7 @@
 import { graphql } from 'msw';
 import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER } from '../graphql/lists';
 import { lists, managers } from './db';
+
 export const handlers = [
   graphql.query(GET_LISTS, (req, res, ctx) => {
     return res(
@@ -10,19 +11,17 @@ export const handlers = [
     );
   }),
   graphql.query(PUT_LIST_TITLE, (req, res, ctx) => {
-    console.log(req.variables.state, req.variables.newState);
-    const newState = req.variables.newState;
+    const { newState } = req.variables;
     const idx = lists.findIndex(({ state }) => state === req.variables.state);
     if (idx > -1) {
-      lists[idx].state = newState;
+      lists[idx].state = newState as string;
       return res(
         ctx.data({
-          state: newState,
+          state: newState as string,
         }),
       );
-    } else {
-      return res(ctx.status(404));
     }
+    return res(ctx.status(404));
   }),
 
   graphql.query(GET_ITEM, (req, res, ctx) => {
@@ -35,7 +34,7 @@ export const handlers = [
       }
       return res(
         ctx.data({
-          state: itemState,
+          state: itemState as string,
           item: lists[stateIdx].list[id],
         }),
       );
@@ -43,15 +42,15 @@ export const handlers = [
     return res(ctx.status(404, 'Not found'));
   }),
   graphql.query(GET_MANAGER, (req, res, ctx) => {
-    const searchString = req.variables.searchString;
-    if (!searchString) {
+    const searchVal = req.variables.searchString as string;
+    if (!searchVal) {
       return res(
         ctx.data({
           managers: [],
         }),
       );
     }
-    const newData = managers.filter(({ name }) => name.includes(searchString));
+    const newData = managers.filter(({ name }) => name.includes(searchVal));
     return res(
       ctx.data({
         managers: newData,
