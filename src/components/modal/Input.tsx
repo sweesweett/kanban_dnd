@@ -9,7 +9,7 @@ const Input = ({ type, name, label, options }: { type: string; name: string; lab
   );
 };
 
-const Label = styled.label`
+export const Label = styled.label`
   font-weight: 700;
 `;
 const InputEl = styled.input`

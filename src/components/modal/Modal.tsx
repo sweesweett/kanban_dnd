@@ -1,6 +1,6 @@
 import { FormEvent } from 'react';
 import styled from 'styled-components';
-import Input from './Input';
+import Input, { Label } from './Input';
 import CloseBar from './CloseBar';
 import { useNavigate } from 'react-router-dom';
 import { graphqlFetcher, Querykeys } from '../../queryClient';
@@ -36,15 +36,15 @@ const Modal = () => {
           label="제목"
           options={{ defaultValue: data?.item.title, placeholder: '제목을 입력해 주세요', required: true }}
         />
-        <label htmlFor="status">상태</label>
-        <select defaultValue={state || ''} name="status" id="status" required>
+        <Label htmlFor="status">상태</Label>
+        <SelectEl defaultValue={state || ''} name="status" id="status" required>
           {stateSelect?.map((option) => (
             <option value={option} key={option}>
               {option}
             </option>
           ))}
-        </select>
-        <label htmlFor="content">내용</label>
+        </SelectEl>
+        <Label htmlFor="content">내용</Label>
         <Textarea name="content" defaultValue={data?.item.content} required />
         <Input
           type="datetime-local"
@@ -65,13 +65,14 @@ const Modal = () => {
     </ModalContainer>
   );
 };
+
 const ModalContainer = styled.div`
   background-color: #e1e6e7;
   width: 40vw;
   min-width: 300px;
   max-width: 800px;
   border-radius: 4px;
-  padding: 20px;
+  padding: 28px 20px;
   animation: open 0.3s ease-out 1 forwards;
   @keyframes open {
     0% {
@@ -89,6 +90,13 @@ const Form = styled.form`
   flex-direction: column;
   gap: 12px;
 `;
+const SelectEl = styled.select`
+  padding: 8px;
+  border: none;
+  :focus {
+    outline: 2px solid rgba(0, 0, 0, 0.3);
+  }
+`;
 const Textarea = styled.textarea`
   width: 100%;
   resize: none;
@@ -96,6 +104,9 @@ const Textarea = styled.textarea`
   border: none;
   :focus {
     outline: 2px solid rgba(0, 0, 0, 0.3);
+  }
+  option {
+    border: none;
   }
 `;
 
