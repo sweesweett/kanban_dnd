@@ -1,4 +1,7 @@
+import { useRecoilValue } from 'recoil';
 import { useEffect, useState } from 'react';
+import { searchParamsState } from '../store';
+import { useLocation } from 'react-router-dom';
 
 interface AnyObj {
   [index: string]: string | null;
@@ -6,16 +9,25 @@ interface AnyObj {
 
 const useSearchParams = (arr: string[]) => {
   const [newObj, setNewObj] = useState<AnyObj>({});
-
+  const [newArr] = useState([...arr]);
+  // const search = useRecoilValue(searchParamsState);
+  const { search } = useLocation();
   useEffect(() => {
     const obj: AnyObj = {};
-    const params = new URL(location).searchParams;
-    const getParamsArr = arr.forEach((param: string) => {
-      if (params.get(param)) obj[param] = params.get(param) as string;
-      else obj[param] = null;
-    });
-    setNewObj(obj);
-  }, [location.search]);
+    if (search) {
+      const params = new URLSearchParams(search);
+      newArr.forEach((param: string) => {
+        if (params.get(param)) obj[param] = params.get(param) as string;
+        else obj[param] = null;
+      });
+      setNewObj(obj);
+    } else {
+      newArr.forEach((param: string) => {
+        obj[param] = null;
+      });
+      setNewObj(obj);
+    }
+  }, [search, newArr]);
 
   return { ...newObj };
 };

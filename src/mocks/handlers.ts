@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { graphql } from 'msw';
 import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER } from '../graphql/lists';
 import { lists, managers } from './db';

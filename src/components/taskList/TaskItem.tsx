@@ -1,10 +1,14 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+
 const TaskItem = ({ title, manager }: { title: string; manager: string | null }) => {
   return (
-    <TaskLi draggable>
-      <span>{title}</span>
-      {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
-    </TaskLi>
+    <Link to="/?mode=edit&state=IN_PROGRESS&id=6">
+      <TaskLi draggable>
+        <span>{title}</span>
+        {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
+      </TaskLi>
+    </Link>
   );
 };
 const TaskLi = styled.li`

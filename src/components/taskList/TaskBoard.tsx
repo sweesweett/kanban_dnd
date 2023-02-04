@@ -8,7 +8,7 @@ import GET_LISTS from '../../graphql/lists';
 import { List } from '../../types/lists';
 import { useSetRecoilState } from 'recoil';
 import { stateAtom } from '../../store';
-import { useEffect } from 'react';
+import { useEffect, memo } from 'react';
 
 const TaskBoard = () => {
   const { data } = useQuery<{ lists: List[] }>(Querykeys.LISTS, () => graphqlFetcher(GET_LISTS));
@@ -37,4 +37,4 @@ const TaskListWrapper = styled.div`
   gap: 30px;
 `;
 
-export default TaskBoard;
+export default memo(TaskBoard);
