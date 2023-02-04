@@ -33,4 +33,28 @@ export const GET_MANAGER = gql`
     manangers
   }
 `;
+export const PUT_ITEM = gql`
+  query PUT_ITEM($id: number, $state: string) {
+    item(id: $id) {
+      id
+      order
+      title
+      content
+      endDate
+      manager
+    }
+  }
+`;
+export const POST_ITEM = gql`
+  query POST_ITEM($id: number, $state: string) {
+    item(id: $id) {
+      id
+      order
+      title
+      content
+      endDate
+      manager
+    }
+  }
+`;
 export default GET_LISTS;
