@@ -1,6 +1,4 @@
-import { useRecoilValue } from 'recoil';
 import { useEffect, useState } from 'react';
-import { searchParamsState } from '../store';
 import { useLocation } from 'react-router-dom';
 
 interface AnyObj {
@@ -10,7 +8,6 @@ interface AnyObj {
 const useSearchParams = (arr: string[]) => {
   const [newObj, setNewObj] = useState<AnyObj>({});
   const [newArr] = useState([...arr]);
-  // const search = useRecoilValue(searchParamsState);
   const { search } = useLocation();
   useEffect(() => {
     const obj: AnyObj = {};

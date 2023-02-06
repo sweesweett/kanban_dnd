@@ -24,7 +24,7 @@ export const GET_ITEM = gql`
   }
 `;
 export const PUT_LIST_TITLE = gql`
-  query PUT_LIST_TITLE($state: string) {
+  query PUT_LIST_TITLE($states: object) {
     state
   }
 `;
