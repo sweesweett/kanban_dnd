@@ -1,20 +1,32 @@
+import { StateChange, List } from '../types/lists';
 import { atom, selector } from 'recoil';
 
-export const stateAtom = atom<string[]>({
-  key: 'stateAtom',
+export const listAtom = atom<List[]>({
+  key: 'listAtom',
   default: [],
 });
-const searchParamsAtom = atom<string>({
-  key: 'searchParamsAtom',
-  default: window.location.search,
-});
-export const searchParamsState = selector<string>({
-  key: 'searchParamsState',
+export const listNameSelector = selector<string[] | StateChange>({
+  key: 'listNameSelector',
   get: ({ get }) => {
-    const params = get(searchParamsAtom);
-    return params;
+    const getLists = get(listAtom);
+    const listNames = getLists.map(({ state }) => state);
+    return listNames;
   },
-  set: ({ set }, val) => {
-    set(searchParamsAtom, val);
+  set: ({ get, set }, value) => {
+    const { state, newState } = value as StateChange;
+    const getLists = get(listAtom);
+    const listNames = get(listNameSelector) as string[];
+    const idx = listNames.indexOf(state);
+    set(
+      listAtom,
+      getLists.map((list) => {
+        if (list.state === listNames[idx]) {
+          const newList = { ...list };
+          newList.state = newState;
+          return newList;
+        }
+        return list;
+      }),
+    );
   },
 });

@@ -1,4 +1,5 @@
 export interface ListContent {
+  [index: string]: number | string | null;
   id: number;
   order: number;
   title: string;
@@ -8,6 +9,7 @@ export interface ListContent {
 }
 
 export interface List {
+  [index: string]: string | ListContent[];
   state: string;
   list: ListContent[];
 }
@@ -18,4 +20,10 @@ interface Manager {
 }
 export interface Managers {
   managers: Manager[];
+}
+
+export interface StateChange {
+  [index: string]: string;
+  state: string;
+  newState: string;
 }

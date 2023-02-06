@@ -2,7 +2,6 @@
 import { graphql } from 'msw';
 import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER } from '../graphql/lists';
 import { lists, managers } from './db';
-
 export const handlers = [
   graphql.query(GET_LISTS, (req, res, ctx) => {
     return res(
@@ -11,11 +10,9 @@ export const handlers = [
       }),
     );
   }),
-  graphql.query(PUT_LIST_TITLE, (req, res, ctx) => {
+  graphql.mutation(PUT_LIST_TITLE, (req, res, ctx) => {
     const { state: prevState, newState } = req.variables;
-    console.log(prevState, newState);
     const idx = lists.findIndex(({ state }) => state === prevState);
-    console.log(idx);
     if (idx > -1) {
       lists[idx].state = newState as string;
       console.log(lists);
