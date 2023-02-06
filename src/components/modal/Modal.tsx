@@ -8,7 +8,7 @@ import { useQuery } from 'react-query';
 import { GET_ITEM } from '../../graphql/lists';
 import { ListContent } from '../../types/lists';
 import { useRecoilValue } from 'recoil';
-import { stateAtom } from '../../store';
+import { listNameSelector } from '../../store';
 import useSearchParams from '../../hooks/useSearchParams';
 import SearchManager from './SearchManager';
 
@@ -22,7 +22,7 @@ const Modal = () => {
       enabled: !!id,
     },
   );
-  const stateSelect = useRecoilValue(stateAtom);
+  const stateSelect = useRecoilValue(listNameSelector) as string[];
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };

@@ -24,7 +24,7 @@ export const GET_ITEM = gql`
   }
 `;
 export const PUT_LIST_TITLE = gql`
-  query PUT_LIST_TITLE($states: object) {
+  mutation PUT_LIST_TITLE($state: string, $newState: string) {
     state
   }
 `;
@@ -46,7 +46,7 @@ export const PUT_ITEM = gql`
   }
 `;
 export const POST_ITEM = gql`
-  query POST_ITEM($id: number, $state: string) {
+  mutation POST_ITEM($id: number, $state: string) {
     item(id: $id) {
       id
       order

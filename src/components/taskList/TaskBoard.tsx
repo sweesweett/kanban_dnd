@@ -6,21 +6,22 @@ import { graphqlFetcher, Querykeys } from '../../queryClient';
 import { useQuery } from 'react-query';
 import GET_LISTS from '../../graphql/lists';
 import { List } from '../../types/lists';
-import { useSetRecoilState } from 'recoil';
-import { stateAtom } from '../../store';
+import { useRecoilState } from 'recoil';
+import { listAtom } from '../../store';
 import { useEffect, memo } from 'react';
 
 const TaskBoard = () => {
-  const { data } = useQuery<{ lists: List[] }>(Querykeys.LISTS, () => graphqlFetcher(GET_LISTS));
-  const setState = useSetRecoilState(stateAtom);
-  useEffect(() => {
-    setState(data ? data?.lists.map((el) => el.state) : []);
-  }, [data, setState]);
+  const [boardValue, setBoardValue] = useRecoilState(listAtom);
+  const { data } = useQuery<{ lists: List[] }>(Querykeys.LISTS, () => graphqlFetcher(GET_LISTS), {
+    onSuccess: (data) => {
+      setBoardValue(data.lists);
+    },
+  });
   return (
     <TaskBoardWrapper>
       <TaskTitleForm size={24} title="칸반보드" />
       <TaskListWrapper>
-        {data?.lists.map((lists) => (
+        {boardValue?.map((lists) => (
           <TaskList key={lists.state} title={lists.state} list={lists.list} />
         ))}
       </TaskListWrapper>

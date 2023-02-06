@@ -1,18 +1,30 @@
 import React, { FocusEvent, FormEvent } from 'react';
-
 import styled from 'styled-components';
 import { graphqlFetcher } from '../../queryClient';
 import { useMutation } from 'react-query';
 import { RequestDocument } from 'graphql-request';
+import { useRecoilState } from 'recoil';
+import { listNameSelector } from '../../store';
+import { StateChange } from '../../types/lists';
 
 const TaskTitleForm = ({ size, title, eventName }: { size: number; title: string; eventName: RequestDocument }) => {
-  const fetcher = useMutation((newState: string) => graphqlFetcher(eventName, { state: title, newState }));
-
+  const [titles, setTitles] = useRecoilState(listNameSelector);
+  const fetcher = useMutation((newState: string) => graphqlFetcher(eventName, { state: title, newState }), {
+    onSuccess: (data) => {
+      const { state } = data as { state: string };
+      setTitles({ state: title, newState: state });
+    },
+    onError: () => {
+      console.log('좃댓서콩지야');
+    },
+  });
+  // TODO:graphql 에러(404) 고치기
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const title = e.currentTarget.titleVal as HTMLFormElement;
-    fetcher.mutate(title.value as string);
-    title.blur();
+    const titleValue = title.value as string;
+    fetcher.mutate(titleValue);
+
     // TODO:리액트 쿼리 useMutation 사용방법 더 찾아보고 리팩토링 하기
   };
   const blurHandler = (e: FocusEvent<HTMLInputElement, Element>) => {

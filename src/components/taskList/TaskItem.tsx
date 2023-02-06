@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const TaskItem = ({ title, manager }: { title: string; manager: string | null }) => {
   return (
-    <Link to="/?mode=edit&state=IN_PROGRESS&id=6">
+    <Link to="/?mode=edit&state=TO_DO&id=1">
       <TaskLi draggable>
         <span>{title}</span>
         {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
