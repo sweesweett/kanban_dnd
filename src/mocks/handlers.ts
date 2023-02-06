@@ -12,17 +12,20 @@ export const handlers = [
     );
   }),
   graphql.query(PUT_LIST_TITLE, (req, res, ctx) => {
-    const { newState } = req.variables;
-    const idx = lists.findIndex(({ state }) => state === req.variables.state);
+    const { state: prevState, newState } = req.variables;
+    console.log(prevState, newState);
+    const idx = lists.findIndex(({ state }) => state === prevState);
+    console.log(idx);
     if (idx > -1) {
       lists[idx].state = newState as string;
+      console.log(lists);
       return res(
         ctx.data({
           state: newState as string,
         }),
       );
     }
-    return res(ctx.status(404));
+    // return res(ctx.status(404));
   }),
 
   graphql.query(GET_ITEM, (req, res, ctx) => {

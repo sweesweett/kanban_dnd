@@ -3,22 +3,15 @@ import TaskItem from './TaskItem';
 import TaskTitleForm from './TaskTitleForm';
 import AddTask from './AddTask';
 import { ListContent } from '../../types/lists';
-import { graphqlFetcher } from '../../queryClient';
-import { useMutation } from 'react-query';
+
 import { PUT_LIST_TITLE } from '../../graphql/lists';
 
 const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
-  const fetcher = useMutation((newState: string) => graphqlFetcher(PUT_LIST_TITLE, { state: title, newState }));
-
-  const ChangeTitleHandler = (newState: string) => {
-    fetcher.mutate(newState);
-  };
-
   return (
     <TaskListContainer>
       <TaskTitleInfo>
         <CountBadge>{list.length}</CountBadge>
-        <TaskTitleForm size={16} title={title} event={ChangeTitleHandler} />
+        <TaskTitleForm size={16} title={title} eventName={PUT_LIST_TITLE} />
       </TaskTitleInfo>
 
       <TaskListUl>

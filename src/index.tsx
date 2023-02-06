@@ -13,12 +13,12 @@ if (process.env.NODE_ENV === 'development') {
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <BrowserRouter>
-        <GlobalStyle />
-        <App />
-      </BrowserRouter>
-    </RecoilRoot>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <RecoilRoot>
+    <BrowserRouter>
+      <GlobalStyle />
+      <App />
+    </BrowserRouter>
+  </RecoilRoot>,
+  // </React.StrictMode>,
 );
