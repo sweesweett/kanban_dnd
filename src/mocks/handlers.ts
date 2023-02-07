@@ -1,7 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { graphql } from 'msw';
-import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER } from '../graphql/lists';
+import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER, POST_ITEM } from '../graphql/lists';
 import { lists, managers } from './db';
+
 export const handlers = [
   graphql.query(GET_LISTS, (req, res, ctx) => {
     return res(
@@ -9,20 +10,6 @@ export const handlers = [
         lists: [...lists],
       }),
     );
-  }),
-  graphql.mutation(PUT_LIST_TITLE, (req, res, ctx) => {
-    const { state: prevState, newState } = req.variables;
-    const idx = lists.findIndex(({ state }) => state === prevState);
-    if (idx > -1) {
-      lists[idx].state = newState as string;
-      console.log(lists);
-      return res(
-        ctx.data({
-          state: newState as string,
-        }),
-      );
-    }
-    // return res(ctx.status(404));
   }),
 
   graphql.query(GET_ITEM, (req, res, ctx) => {
@@ -57,5 +44,24 @@ export const handlers = [
         managers: newData,
       }),
     );
+  }),
+  graphql.mutation(PUT_LIST_TITLE, (req, res, ctx) => {
+    const { state: prevState, newState } = req.variables;
+    const idx = lists.findIndex(({ state }) => state === prevState);
+    if (idx > -1) {
+      lists[idx].state = newState as string;
+      console.log(lists);
+      return res(
+        ctx.data({
+          state: newState as string,
+        }),
+      );
+    }
+    return res(ctx.status(404));
+  }),
+  graphql.mutation(POST_ITEM, (req, res, ctx) => {
+    const { state, data } = req.variables;
+
+    return res(ctx.status(404));
   }),
 ];

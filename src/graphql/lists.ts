@@ -34,7 +34,7 @@ export const GET_MANAGER = gql`
   }
 `;
 export const PUT_ITEM = gql`
-  query PUT_ITEM($id: number, $state: string) {
+  mutation PUT_ITEM($id: number, $state: string) {
     item(id: $id) {
       id
       order

@@ -22,6 +22,7 @@ const Modal = () => {
       enabled: !!id,
     },
   );
+
   const stateSelect = useRecoilValue(listNameSelector) as string[];
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
