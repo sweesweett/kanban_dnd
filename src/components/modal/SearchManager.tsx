@@ -10,7 +10,7 @@ import useDebounce from '../../hooks/useDebounce';
 const SearchManager = ({ defaultValue }: { defaultValue: string | undefined | null }) => {
   const [searchValue, setSearchValue] = useState(defaultValue || '');
   const debounce = useDebounce(searchValue);
-  const { data, refetch } = useQuery<Managers>(
+  const { data, refetch, remove } = useQuery<Managers>(
     Querykeys.MANAGER,
     () => graphqlFetcher(GET_MANAGER, { searchString: debounce }),
     {
@@ -23,6 +23,9 @@ const SearchManager = ({ defaultValue }: { defaultValue: string | undefined | nu
       refetch();
     }
   }, [debounce, refetch]);
+  useEffect(() => {
+    return () => remove();
+  }, [remove]);
   return (
     <SearchManagerWrapper>
       <Input
