@@ -5,6 +5,10 @@ export const listAtom = atom<List[]>({
   key: 'listAtom',
   default: [],
 });
+export const SearchAtom = atom<string>({
+  key: 'searchAtom',
+  default: '',
+});
 export const listNameSelector = selector<string[] | StateChange>({
   key: 'listNameSelector',
   get: ({ get }) => {

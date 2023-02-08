@@ -6,15 +6,17 @@ import { GET_MANAGER } from '../../graphql/lists';
 import { Managers } from '../../types/lists';
 import { ChangeEvent, useState, useEffect } from 'react';
 import useDebounce from '../../hooks/useDebounce';
+import { useRecoilState } from 'recoil';
+import { SearchAtom } from '../../store';
 
-const SearchManager = ({ defaultValue }: { defaultValue: string | undefined | null }) => {
-  const [searchValue, setSearchValue] = useState(defaultValue || '');
+const SearchManager = () => {
+  const [searchValue, setSearchValue] = useRecoilState(SearchAtom);
   const debounce = useDebounce(searchValue);
   const { data, refetch, remove } = useQuery<Managers>(
     Querykeys.MANAGER,
     () => graphqlFetcher(GET_MANAGER, { searchString: debounce }),
     {
-      enabled: !!searchValue,
+      enabled: !!debounce,
     },
   );
   useEffect(() => {
@@ -42,7 +44,6 @@ const SearchManager = ({ defaultValue }: { defaultValue: string | undefined | nu
       />
 
       <DropUl>
-        {!data && searchValue && <span>검색 결과 없음</span>}
         {data?.managers.map((manager) => (
           <DropLi
             key={manager.id}

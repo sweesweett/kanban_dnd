@@ -1,3 +1,4 @@
+import { ListContent } from '../types/lists';
 /* eslint-disable import/no-extraneous-dependencies */
 import { graphql } from 'msw';
 import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER, POST_ITEM } from '../graphql/lists';
@@ -50,7 +51,6 @@ export const handlers = [
     const idx = lists.findIndex(({ state }) => state === prevState);
     if (idx > -1) {
       lists[idx].state = newState as string;
-      console.log(lists);
       return res(
         ctx.data({
           state: newState as string,
@@ -61,7 +61,12 @@ export const handlers = [
   }),
   graphql.mutation(POST_ITEM, (req, res, ctx) => {
     const { state, data } = req.variables;
-
-    return res(ctx.status(404));
+    const idx = lists.findIndex(({ state: title }) => title === state);
+    lists[idx].list.push(data as ListContent);
+    return res(
+      ctx.data({
+        item: data as ListContent,
+      }),
+    );
   }),
 ];

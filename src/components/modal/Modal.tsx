@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import Input, { Label } from './Input';
 import CloseBar from './CloseBar';
@@ -7,13 +7,15 @@ import { graphqlFetcher, Querykeys } from '../../queryClient';
 import { useQuery } from 'react-query';
 import { GET_ITEM } from '../../graphql/lists';
 import { ListContent } from '../../types/lists';
-import { useRecoilValue } from 'recoil';
-import { listNameSelector } from '../../store';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { listNameSelector, SearchAtom } from '../../store';
 import useSearchParams from '../../hooks/useSearchParams';
 import SearchManager from './SearchManager';
 
 const Modal = () => {
   const { mode, state, id } = useSearchParams(['mode', 'state', 'id']);
+  const setSearchValue = useSetRecoilState(SearchAtom);
+  const stateSelect = useRecoilValue(listNameSelector) as string[];
   const navigate = useNavigate();
   const { data } = useQuery<{ item: ListContent }>(
     [Querykeys.ITEM, id, state],
@@ -22,8 +24,13 @@ const Modal = () => {
       enabled: !!id,
     },
   );
+  useEffect(() => {
+    if (data) {
+      setSearchValue(data?.item.manager as string);
+    }
 
-  const stateSelect = useRecoilValue(listNameSelector) as string[];
+    return () => setSearchValue('');
+  }, [setSearchValue, data]);
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
@@ -53,7 +60,7 @@ const Modal = () => {
           label="마감일"
           options={{ min: new Date().toISOString().slice(0, -8), defaultValue: data?.item.endDate }}
         />
-        <SearchManager defaultValue={data?.item.manager} />
+        <SearchManager />
         <ModalBtns>
           <Button color="#a8edea" type="submit">
             저장
