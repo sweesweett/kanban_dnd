@@ -47,7 +47,7 @@ export const PUT_ITEM = gql`
 `;
 export const POST_ITEM = gql`
   mutation POST_ITEM($id: number, $state: string) {
-    item(id: $id) {
+    item {
       id
       order
       title
