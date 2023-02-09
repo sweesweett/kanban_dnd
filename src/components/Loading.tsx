@@ -23,13 +23,13 @@ const LoadingWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.1);
 `;
 const LoadingCircle = styled.div`
   position: relative;
-  width: 25%;
+  width: 15%;
   max-width: 50px;
-  height: 25%;
+  height: 15%;
   max-height: 50px;
   border-radius: 50%;
   /* box-shadow: inset -1px -2px 30px rgba(0, 0, 0, 0.1); */

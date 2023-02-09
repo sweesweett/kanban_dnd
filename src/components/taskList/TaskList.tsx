@@ -19,7 +19,7 @@ const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
           <TaskItem key={item.id} title={item.title} manager={item.manager} />
         ))}
       </TaskListUl>
-      <AddTask textContent="Add a card" status="task" />
+      <AddTask textContent="Add a card" status={title} />
     </TaskListContainer>
   );
 };

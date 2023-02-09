@@ -14,11 +14,10 @@ const TaskTitleForm = ({ size, title, eventName }: { size: number; title: string
       const { state } = data as { state: string };
       setTitles({ state: title, newState: state });
     },
-    onError: () => {
-      console.log('좃댓서콩지야');
+    onError: (err: string) => {
+      console.log(`Error:${err}`);
     },
   });
-  // TODO:graphql 에러(404) 고치기
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const title = e.currentTarget.titleVal as HTMLFormElement;
