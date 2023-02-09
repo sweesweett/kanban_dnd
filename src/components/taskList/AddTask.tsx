@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const AddTask = ({ status, textContent }: { status: string; textContent: string }) => {
   const navigate = useNavigate();
   return (
-    <AddBtn onClick={() => navigate(`/?mode=${status}`)}>
+    <AddBtn onClick={() => navigate(`/?mode=add&state=${status}`)}>
       <AiOutlinePlus size="16px" />
       <span>{textContent}</span>
     </AddBtn>

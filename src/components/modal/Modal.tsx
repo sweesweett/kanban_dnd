@@ -11,6 +11,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { listNameSelector, SearchAtom } from '../../store';
 import useSearchParams from '../../hooks/useSearchParams';
 import SearchManager from './SearchManager';
+import useForm from '../../hooks/useForm';
 
 const Modal = () => {
   const { mode, state, id } = useSearchParams(['mode', 'state', 'id']);
@@ -24,6 +25,7 @@ const Modal = () => {
       enabled: !!id,
     },
   );
+  const { getFormData } = useForm();
   useEffect(() => {
     if (data) {
       setSearchValue(data?.item.manager as string);
@@ -33,6 +35,7 @@ const Modal = () => {
   }, [setSearchValue, data]);
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    getFormData(e.currentTarget);
   };
   return (
     <ModalContainer>
