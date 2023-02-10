@@ -1,4 +1,4 @@
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, lazy } from 'react';
 import styled from 'styled-components';
 import Input, { Label } from './Input';
 import CloseBar from './CloseBar';
@@ -25,7 +25,7 @@ const Modal = () => {
       enabled: !!id,
     },
   );
-  const { getFormData } = useForm();
+  const { getFormData } = useForm(mode);
   useEffect(() => {
     if (data) {
       setSearchValue(data?.item.manager as string);
