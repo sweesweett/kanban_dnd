@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 interface AnyObj {
-  [index: string]: string | null;
+  [index: string]: string;
 }
 
 const useSearchParams = (arr: string[]) => {
@@ -15,12 +15,12 @@ const useSearchParams = (arr: string[]) => {
       const params = new URLSearchParams(search);
       newArr.forEach((param: string) => {
         if (params.get(param)) obj[param] = params.get(param) as string;
-        else obj[param] = null;
+        else obj[param] = '';
       });
       setNewObj(obj);
     } else {
       newArr.forEach((param: string) => {
-        obj[param] = null;
+        obj[param] = '';
       });
       setNewObj(obj);
     }

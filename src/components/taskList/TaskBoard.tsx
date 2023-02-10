@@ -12,7 +12,7 @@ import Loading from '../Loading';
 
 const TaskBoard = () => {
   const [boardValue, setBoardValue] = useRecoilState(listAtom);
-  const { data, isLoading } = useQuery<{ lists: List[] }>(Querykeys.LISTS, () => graphqlFetcher(GET_LISTS), {
+  const { isLoading } = useQuery<{ lists: List[] }>(Querykeys.LISTS, () => graphqlFetcher(GET_LISTS), {
     onSuccess: (data) => {
       setBoardValue(data.lists);
     },
@@ -40,4 +40,4 @@ const TaskListWrapper = styled.div`
   gap: 30px;
 `;
 
-export default memo(TaskBoard);
+export default TaskBoard;

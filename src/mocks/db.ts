@@ -5,7 +5,7 @@ export const lists: List[] = [
     state: 'TO_DO',
     list: [
       {
-        id: 1,
+        id: '1',
         order: 0,
         title: 'asd',
         content: 'asd',
@@ -13,7 +13,7 @@ export const lists: List[] = [
         manager: '은우',
       },
       {
-        id: 2,
+        id: '2',
         order: 1,
         title: 'zxc',
         content: 'zxc',
@@ -21,7 +21,7 @@ export const lists: List[] = [
         manager: null,
       },
       {
-        id: 3,
+        id: '3',
         order: 2,
         title: 'qwe',
         content: 'qwe',
@@ -29,7 +29,7 @@ export const lists: List[] = [
         manager: '윤진',
       },
       {
-        id: 4,
+        id: '4',
         order: 3,
         title: 'fgh',
         content: 'fgh',
@@ -37,7 +37,7 @@ export const lists: List[] = [
         manager: '빵상',
       },
       {
-        id: 5,
+        id: '5',
         order: 0,
         title: 'rty',
         content: 'rty',
@@ -50,7 +50,7 @@ export const lists: List[] = [
     state: 'IN_PROGRESS',
     list: [
       {
-        id: 6,
+        id: '6',
         order: 0,
         title: 'asd',
         content: 'asd',
@@ -58,7 +58,7 @@ export const lists: List[] = [
         manager: '아이스티',
       },
       {
-        id: 7,
+        id: '7',
         order: 1,
         title: 'zxc',
         content: 'zxc',
@@ -66,7 +66,7 @@ export const lists: List[] = [
         manager: '제로',
       },
       {
-        id: 8,
+        id: '8',
         order: 2,
         title: 'qwe',
         content: 'qwe',
@@ -74,7 +74,7 @@ export const lists: List[] = [
         manager: null,
       },
       {
-        id: 9,
+        id: '9',
         order: 3,
         title: 'fgh',
         content: 'fgh',
@@ -82,7 +82,7 @@ export const lists: List[] = [
         manager: '뚜껑',
       },
       {
-        id: 10,
+        id: '10',
         order: 4,
         title: 'rty',
         content: 'rty',
@@ -95,7 +95,7 @@ export const lists: List[] = [
     state: 'DONE',
     list: [
       {
-        id: 11,
+        id: '11',
         order: 0,
         title: 'asd',
         content: 'asd',
@@ -103,7 +103,7 @@ export const lists: List[] = [
         manager: '아이스티',
       },
       {
-        id: 12,
+        id: '12',
         order: 1,
         title: 'zxc',
         content: 'zxc',
@@ -111,7 +111,7 @@ export const lists: List[] = [
         manager: '제로',
       },
       {
-        id: 13,
+        id: '13',
         order: 2,
         title: 'qwe',
         content: 'qwe',
@@ -119,7 +119,7 @@ export const lists: List[] = [
         manager: '바나나',
       },
       {
-        id: 14,
+        id: '14',
         order: 3,
         title: 'fgh',
         content: 'fgh',
@@ -127,7 +127,7 @@ export const lists: List[] = [
         manager: '뚜껑',
       },
       {
-        id: 15,
+        id: '15',
         order: 4,
         title: 'rty',
         content: 'rty',
@@ -161,5 +161,9 @@ export const managers = [
   {
     id: 6,
     name: '이윤진',
+  },
+  {
+    id: 7,
+    name: '은우',
   },
 ];

@@ -1,6 +1,6 @@
 export interface ListContent {
   [index: string]: number | string | null;
-  id: number;
+  id: string;
   order: number;
   title: string;
   content: string;
