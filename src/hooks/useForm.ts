@@ -1,18 +1,29 @@
+import { useNavigate } from 'react-router-dom';
+import { ListContent } from '../types/lists';
 import { useMutation } from 'react-query';
 import { useState } from 'react';
 import { graphqlFetcher } from '../queryClient';
 import { RequestDocument } from 'graphql-request';
+import useDynamicImport from './useDynamicImport';
 
-const useForm = () => {
+const useForm = (mode: string) => {
   // query: RequestDocument, queryOption: object
-  // const fetcher = useMutation((data: object) => graphqlFetcher(query, data), queryOption);
-  const serialize = (data: FormData) => {
-    const formDataObject = Object.fromEntries(data.entries());
-    return formDataObject;
-  };
+  const navigate = useNavigate();
+  const query = useDynamicImport(mode);
+  const fetcher = useMutation((data: ListContent) => graphqlFetcher(query, data), {
+    onSuccess: (data) => {
+      // TODO:데이터 변경
+      navigate('/');
+    },
+    onError: (err: string) => {
+      console.log(`Error:${err}`);
+    },
+  });
   const getFormData = (form: HTMLFormElement) => {
     const formData = new FormData(form);
-    const formobj = serialize(formData);
+    const formObj = Object.fromEntries(formData.entries()) as ListContent;
+    console.log(formObj);
+    fetcher.mutate(formObj);
   };
   return { getFormData };
 };
