@@ -1,7 +1,7 @@
-import { ListContent } from '../types/lists';
+import { ListContent, Managers } from '../types/lists';
 /* eslint-disable import/no-extraneous-dependencies */
 import { graphql } from 'msw';
-import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER, POST_ITEM } from '../graphql/lists';
+import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER, POST_ITEM, PUT_ITEM } from '../graphql/lists';
 import { lists, managers } from './db';
 
 export const handlers = [
@@ -9,7 +9,7 @@ export const handlers = [
     return res(
       ctx.delay(2000),
       ctx.data({
-        lists: [...lists],
+        lists,
       }),
     );
   }),
@@ -18,7 +18,7 @@ export const handlers = [
     const { id: idx, state: itemState } = req.variables;
     const stateIdx = lists.findIndex(({ state }) => state === itemState);
     if (stateIdx > -1) {
-      const id = lists[stateIdx].list.findIndex(({ id }) => id === Number(idx));
+      const id = lists[stateIdx].list.findIndex(({ id }) => id === idx);
       if (id === -1) {
         return res(ctx.status(404, 'Not found'));
       }
@@ -61,12 +61,34 @@ export const handlers = [
     return res(ctx.status(404));
   }),
   graphql.mutation(POST_ITEM, (req, res, ctx) => {
-    const { state, data } = req.variables;
-    const idx = lists.findIndex(({ state: title }) => title === state);
+    const data = req.variables;
+    const idx = lists.findIndex(({ state: title }) => title === data.state);
+
     lists[idx].list.push(data as ListContent);
+    const managerIdx = managers.findIndex(({ name }) => name === data.manager);
+    if (managerIdx === -1) {
+      managers.push({ id: managers.length + 1, name: data.manager as string });
+    }
     return res(
       ctx.data({
         item: data as ListContent,
+      }),
+    );
+    // TODO: uuid로 변경 후 하자
+  }),
+  graphql.mutation(PUT_ITEM, (req, res, ctx) => {
+    const data = req.variables;
+    const idx = lists.findIndex(({ state: title }) => title === data.state);
+    const newData = { ...(delete data.state, data) };
+    const putDataIdx: number = lists[idx].list.findIndex(({ id }) => id === data.id);
+    lists[idx].list[putDataIdx] = newData as ListContent;
+    const managerIdx = managers.findIndex(({ name }) => name === data.manager);
+    if (managerIdx === -1) {
+      managers.push({ id: managers.length + 1, name: data.manager as string });
+    }
+    return res(
+      ctx.data({
+        item: newData,
       }),
     );
   }),

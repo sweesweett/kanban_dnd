@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { graphqlFetcher } from '../queryClient';
 import { RequestDocument } from 'graphql-request';
 import useDynamicImport from './useDynamicImport';
+import { v4 as uuidv4 } from 'uuid';
 
 const useForm = (mode: string) => {
   // query: RequestDocument, queryOption: object
@@ -19,11 +20,10 @@ const useForm = (mode: string) => {
       console.log(`Error:${err}`);
     },
   });
-  const getFormData = (form: HTMLFormElement) => {
+  const getFormData = (form: HTMLFormElement, id = uuidv4()) => {
     const formData = new FormData(form);
-    const formObj = Object.fromEntries(formData.entries()) as ListContent;
-    console.log(formObj);
-    fetcher.mutate(formObj);
+    const formObj = Object.fromEntries(formData.entries());
+    fetcher.mutate({ ...formObj, id } as ListContent);
   };
   return { getFormData };
 };

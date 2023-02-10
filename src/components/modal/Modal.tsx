@@ -35,7 +35,7 @@ const Modal = () => {
   }, [setSearchValue, data]);
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    getFormData(e.currentTarget);
+    getFormData(e.currentTarget, id);
   };
   return (
     <ModalContainer>
@@ -48,7 +48,7 @@ const Modal = () => {
           options={{ defaultValue: data?.item.title, placeholder: '제목을 입력해 주세요', required: true }}
         />
         <Label htmlFor="status">상태</Label>
-        <SelectEl defaultValue={state || ''} name="status" id="status" required>
+        <SelectEl defaultValue={state || ''} name="state" id="state" required>
           {stateSelect?.map((option) => (
             <option value={option} key={option}>
               {option}
