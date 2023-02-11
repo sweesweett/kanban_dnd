@@ -1,19 +1,19 @@
+import { listSelector } from '../store/index';
+import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
-import { ListContent } from '../types/lists';
+import { ListContent, FamilyListValue } from '../types/lists';
 import { useMutation } from 'react-query';
-import { useState } from 'react';
 import { graphqlFetcher } from '../queryClient';
-import { RequestDocument } from 'graphql-request';
 import useDynamicImport from './useDynamicImport';
 import { v4 as uuidv4 } from 'uuid';
 
 const useForm = (mode: string) => {
-  // query: RequestDocument, queryOption: object
   const navigate = useNavigate();
   const query = useDynamicImport(mode);
+  const setValue = useSetRecoilState(listSelector(mode));
   const fetcher = useMutation((data: ListContent) => graphqlFetcher(query, data), {
     onSuccess: (data) => {
-      // TODO:데이터 변경
+      setValue(data as FamilyListValue);
       navigate('/');
     },
     onError: (err: string) => {

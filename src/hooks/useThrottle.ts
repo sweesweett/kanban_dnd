@@ -1,2 +1,3 @@
-const useThrottle = () => {};
-export default useThrottle;
+// const useThrottle = () => {};
+// export default useThrottle;
+export {};

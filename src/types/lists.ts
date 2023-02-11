@@ -27,3 +27,8 @@ export interface StateChange {
   state: string;
   newState: string;
 }
+export interface FamilyListValue {
+  [index: string]: string | ListContent;
+  state: string;
+  item: ListContent;
+}

@@ -1,5 +1,5 @@
-import { StateChange, List } from '../types/lists';
-import { atom, selector } from 'recoil';
+import { StateChange, List, ListContent, FamilyListValue } from '../types/lists';
+import { atom, DefaultValue, selector, selectorFamily } from 'recoil';
 
 export const listAtom = atom<List[]>({
   key: 'listAtom',
@@ -8,6 +8,46 @@ export const listAtom = atom<List[]>({
 export const SearchAtom = atom<string>({
   key: 'searchAtom',
   default: '',
+});
+export const listSelector = selectorFamily<FamilyListValue | List[], string>({
+  key: 'listSelector',
+  get:
+    () =>
+    ({ get }) => {
+      return get(listAtom);
+    },
+
+  // optional set
+  set:
+    (multiplier) =>
+    ({ set, get }, newValue) => {
+      const lists = [...get(listAtom)];
+      const { state, item: list } = newValue as FamilyListValue;
+      const idx = lists.findIndex(({ state: origin }) => state === origin);
+      if (multiplier === 'add') {
+        const newList = lists.map((el) => {
+          if (el.state === state) {
+            return { state, list: [...el.list, list] };
+          }
+          return el;
+        });
+        set(listAtom, newList);
+      } else {
+        const newList = lists[idx].list.map((el) => {
+          if (el.id === list.id) {
+            return list;
+          }
+          return el;
+        });
+        const newLists = lists.map((el) => {
+          if (el.state === state) {
+            return { state, list: newList };
+          }
+          return el;
+        });
+        set(listAtom, newLists);
+      }
+    },
 });
 export const listNameSelector = selector<string[] | StateChange>({
   key: 'listNameSelector',
