@@ -1,4 +1,4 @@
-import { ListContent, Managers } from '../types/lists';
+import { ListContent } from '../types/lists';
 /* eslint-disable import/no-extraneous-dependencies */
 import { graphql } from 'msw';
 import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER, POST_ITEM, PUT_ITEM } from '../graphql/lists';
@@ -63,15 +63,17 @@ export const handlers = [
   graphql.mutation(POST_ITEM, (req, res, ctx) => {
     const data = req.variables;
     const idx = lists.findIndex(({ state: title }) => title === data.state);
-
-    lists[idx].list.push(data as ListContent);
+    const { length } = lists[idx].list;
+    const newData = { ...(delete data.state, data), order: length };
+    lists[idx].list.push(newData as ListContent);
     const managerIdx = managers.findIndex(({ name }) => name === data.manager);
     if (managerIdx === -1) {
       managers.push({ id: managers.length + 1, name: data.manager as string });
     }
     return res(
       ctx.data({
-        item: data as ListContent,
+        state: lists[idx].state,
+        item: newData as ListContent,
       }),
     );
     // TODO: uuid로 변경 후 하자
@@ -88,6 +90,7 @@ export const handlers = [
     }
     return res(
       ctx.data({
+        state: lists[idx].state,
         item: newData,
       }),
     );

@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import TaskBoard from './components/taskList/TaskBoard';
 import { QueryClientProvider } from 'react-query';
 import { getClient } from './queryClient';
