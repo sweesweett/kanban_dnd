@@ -1,5 +1,5 @@
-import { ListContent } from '../types/lists';
 /* eslint-disable import/no-extraneous-dependencies */
+import { ListContent } from '../types/lists';
 import { graphql } from 'msw';
 import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER, POST_ITEM, PUT_ITEM } from '../graphql/lists';
 import { lists, managers } from './db';

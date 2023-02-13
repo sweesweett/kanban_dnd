@@ -13,7 +13,6 @@ const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
         <CountBadge>{list.length}</CountBadge>
         <TaskTitleForm size={16} title={title} eventName={PUT_LIST_TITLE} />
       </TaskTitleInfo>
-
       <TaskListUl>
         {list.map((item) => (
           <TaskItem key={item.id} title={item.title} state={title} manager={item.manager} id={item.id} />

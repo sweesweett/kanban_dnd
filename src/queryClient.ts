@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient, QueryClient } from 'react-query';
+import { QueryClient } from 'react-query';
 import { request, RequestDocument } from 'graphql-request';
 
 export const getClient = (() => {
