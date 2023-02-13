@@ -1,7 +1,5 @@
-import { memo } from 'react';
 import styled from 'styled-components';
 import TaskList from './TaskList';
-import TaskTitleForm from './TaskTitleForm';
 import { graphqlFetcher, Querykeys } from '../../queryClient';
 import { useQuery } from 'react-query';
 import GET_LISTS from '../../graphql/lists';
@@ -19,8 +17,7 @@ const TaskBoard = () => {
   });
   return (
     <TaskBoardWrapper>
-      <TaskTitleForm size={24} title="칸반보드" />
-
+      <TaskBoardTitle>칸반보드</TaskBoardTitle>
       <TaskListWrapper>
         {boardValue?.map((lists) => (
           <TaskList key={lists.state} title={lists.state} list={lists.list} />
@@ -33,6 +30,11 @@ const TaskBoard = () => {
 const TaskBoardWrapper = styled.section`
   margin: 50px 30px;
   min-height: 80vh;
+`;
+const TaskBoardTitle = styled.h2`
+  font-size: 24px;
+  font-weight: 700;
+  margin: 12px;
 `;
 const TaskListWrapper = styled.div`
   margin: 20px;
