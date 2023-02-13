@@ -148,6 +148,10 @@ img {
 }
 a {
   text-decoration: none;
+  :visited,:link{
+    color:black;
+  }
+
 }
 select,
 input,

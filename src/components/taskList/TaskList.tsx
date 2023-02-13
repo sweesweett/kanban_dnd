@@ -16,7 +16,7 @@ const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
 
       <TaskListUl>
         {list.map((item) => (
-          <TaskItem key={item.id} title={item.title} manager={item.manager} />
+          <TaskItem key={item.id} title={item.title} state={title} manager={item.manager} id={item.id} />
         ))}
       </TaskListUl>
       <AddTask textContent="Add a card" status={title} />
