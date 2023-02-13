@@ -1,9 +1,19 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const TaskItem = ({ title, manager }: { title: string; manager: string | null }) => {
+const TaskItem = ({
+  title,
+  manager,
+  id,
+  state,
+}: {
+  title: string;
+  manager: string | null;
+  id: string;
+  state: string;
+}) => {
   return (
-    <Link to="/?mode=edit&state=TO_DO&id=1">
+    <Link to={`/?mode=edit&state=${state}&id=${id}`}>
       <TaskLi draggable>
         <span>{title}</span>
         {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
@@ -24,11 +34,14 @@ const TaskLi = styled.li`
 `;
 export const CircleIcon = styled.div`
   border-radius: 50%;
+  width: 20px;
+  height: 20px;
   background-color: #77d8d4;
   align-self: flex-end;
-  padding: 4px;
   font-size: 14px;
   font-weight: 700;
   color: white;
+  text-align: center;
+  line-height: 20px;
 `;
 export default TaskItem;
