@@ -4,7 +4,7 @@ import { graphqlFetcher, Querykeys } from '../../queryClient';
 import { useQuery } from 'react-query';
 import { GET_MANAGER } from '../../graphql/lists';
 import { Managers } from '../../types/lists';
-import { ChangeEvent, useState, useEffect } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import useDebounce from '../../hooks/useDebounce';
 import { useRecoilState } from 'recoil';
 import { SearchAtom } from '../../store';

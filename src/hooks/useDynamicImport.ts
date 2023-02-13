@@ -5,9 +5,9 @@ const useDynamicImport = (mode: string) => {
   const [query, setquery] = useState<RequestDocument>('');
   const dynamicImport = async (mode: string) => {
     if (mode === 'edit') {
-      await import('../graphql/lists').then((f) => setquery(f.PUT_ITEM));
+      await import('../graphql/lists').then((q) => setquery(q.PUT_ITEM));
     } else {
-      await import('../graphql/lists').then((f) => setquery(f.POST_ITEM));
+      await import('../graphql/lists').then((q) => setquery(q.POST_ITEM));
     }
   };
 

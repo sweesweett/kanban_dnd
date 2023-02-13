@@ -1,5 +1,5 @@
-import { StateChange, List, ListContent, FamilyListValue } from '../types/lists';
-import { atom, DefaultValue, selector, selectorFamily } from 'recoil';
+import { StateChange, List, FamilyListValue } from '../types/lists';
+import { atom, selector, selectorFamily } from 'recoil';
 
 export const listAtom = atom<List[]>({
   key: 'listAtom',
@@ -17,14 +17,13 @@ export const listSelector = selectorFamily<FamilyListValue | List[], string>({
       return get(listAtom);
     },
 
-  // optional set
   set:
-    (multiplier) =>
+    (mode) =>
     ({ set, get }, newValue) => {
       const lists = [...get(listAtom)];
       const { state, item: list } = newValue as FamilyListValue;
       const idx = lists.findIndex(({ state: origin }) => state === origin);
-      if (multiplier === 'add') {
+      if (mode === 'add') {
         const newList = lists.map((el) => {
           if (el.state === state) {
             return { state, list: [...el.list, list] };
