@@ -21,6 +21,7 @@ const useForm = (mode: string) => {
     },
   });
   const getFormData = (form: HTMLFormElement, id = uuidv4()) => {
+    // TODO: 서버쪽에서 id를 부여하는 방식이 더 맞는게 아닐까? 고민해보기
     const formData = new FormData(form);
     const formObj = Object.fromEntries(formData.entries());
     fetcher.mutate({ ...formObj, id } as ListContent);

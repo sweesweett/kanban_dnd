@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, lazy } from 'react';
+import { FormEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import Input, { Label } from './Input';
 import CloseBar from './CloseBar';
@@ -61,7 +61,7 @@ const Modal = () => {
           type="datetime-local"
           name="endDate"
           label="마감일"
-          options={{ min: new Date().toISOString().slice(0, -8), defaultValue: data?.item.endDate }}
+          options={{ min: new Date().toISOString().slice(0, -8), defaultValue: data?.item.endDate, required: true }}
         />
         <SearchManager />
         <ModalBtns>
