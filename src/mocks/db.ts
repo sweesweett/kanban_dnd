@@ -99,7 +99,7 @@ export const lists: List[] = [
         order: 0,
         title: 'asd',
         content: 'asd',
-        endDate: '2023-02-101T10:00',
+        endDate: '2023-02-10T10:00',
         manager: '아이스티',
       },
       {
