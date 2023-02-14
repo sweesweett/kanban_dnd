@@ -1,4 +1,4 @@
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Input, { Label } from './Input';
 import CloseBar from './CloseBar';
@@ -7,16 +7,16 @@ import { graphqlFetcher, Querykeys } from '../../queryClient';
 import { useQuery } from 'react-query';
 import { GET_ITEM } from '../../graphql/lists';
 import { ListContent } from '../../types/lists';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { listNameSelector, SearchAtom } from '../../store';
+import { useSetRecoilState } from 'recoil';
+import { SearchAtom } from '../../store';
 import useSearchParams from '../../hooks/useSearchParams';
 import SearchManager from './SearchManager';
 import useForm from '../../hooks/useForm';
+import ModalSelect from './ModalSelect';
 
 const Modal = () => {
   const { mode, state, id } = useSearchParams(['mode', 'state', 'id']);
   const setSearchValue = useSetRecoilState(SearchAtom);
-  const stateSelect = useRecoilValue(listNameSelector) as string[];
   const navigate = useNavigate();
   const { data } = useQuery<{ item: ListContent }>(
     [Querykeys.ITEM, id, state],
@@ -25,6 +25,7 @@ const Modal = () => {
       enabled: !!id,
     },
   );
+  // TODO: 모달 컴포넌트  리액트쿼리 option 더 알아보고 리팩토링 하기
   const { getFormData } = useForm(mode);
   useEffect(() => {
     if (data) {
@@ -48,14 +49,7 @@ const Modal = () => {
           label="제목"
           options={{ defaultValue: data?.item.title, placeholder: '제목을 입력해 주세요', required: true }}
         />
-        <Label htmlFor="status">상태</Label>
-        <SelectEl defaultValue={state || ''} name="state" id="state" required>
-          {stateSelect?.map((option) => (
-            <option value={option} key={option}>
-              {option}
-            </option>
-          ))}
-        </SelectEl>
+        <ModalSelect state={state} />
         <Label htmlFor="content">내용</Label>
         <Textarea name="content" defaultValue={data?.item.content} required />
         <Input
@@ -101,13 +95,6 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 12px;
-`;
-const SelectEl = styled.select`
-  padding: 8px;
-  border: none;
-  :focus {
-    outline: 2px solid rgba(0, 0, 0, 0.3);
-  }
 `;
 const Textarea = styled.textarea`
   width: 100%;
