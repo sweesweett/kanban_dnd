@@ -28,7 +28,8 @@ const Modal = () => {
   const { getFormData } = useForm(mode);
   useEffect(() => {
     if (data) {
-      setSearchValue(data?.item.manager as string);
+      const manager = data?.item.manager;
+      setSearchValue(manager || '');
     }
 
     return () => setSearchValue('');
