@@ -1,19 +1,17 @@
-import { listSelector } from '../store/index';
-import { useSetRecoilState } from 'recoil';
+import { Querykeys, getClient, graphqlFetcher } from '../queryClient';
 import { useNavigate } from 'react-router-dom';
-import { ListContent, FamilyListValue } from '../types/lists';
+import { ListContent } from '../types/lists';
 import { useMutation } from 'react-query';
-import { graphqlFetcher } from '../queryClient';
 import useDynamicImport from './useDynamicImport';
 import { v4 as uuidv4 } from 'uuid';
 
 const useForm = (mode: string) => {
   const navigate = useNavigate();
   const query = useDynamicImport(mode);
-  const setValue = useSetRecoilState(listSelector(mode));
+  const queryClient = getClient();
   const fetcher = useMutation((data: ListContent) => graphqlFetcher(query, data), {
     onSuccess: (data) => {
-      setValue(data as FamilyListValue);
+      void queryClient.invalidateQueries({ queryKey: [Querykeys.LISTS] });
       navigate('/');
     },
     onError: (err: string) => {

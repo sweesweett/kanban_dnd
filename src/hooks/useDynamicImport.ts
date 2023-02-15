@@ -16,7 +16,6 @@ const useDynamicImport = (mode: string) => {
   useEffect(() => {
     if (mode) {
       void dynamicImport(mode);
-      // TODO: eslint에 맞게 고치기^^>..
     }
   }, [mode]);
 

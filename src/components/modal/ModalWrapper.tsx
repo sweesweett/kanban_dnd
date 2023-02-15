@@ -1,10 +1,17 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from './Modal';
 
 const ModalWrapper = () => {
+  const navigate = useNavigate();
   return (
     <>
-      <Bg />
+      <Bg
+        role="presentation"
+        onClick={() => {
+          navigate('/');
+        }}
+      />
       <ModalContent>
         <Modal />
       </ModalContent>

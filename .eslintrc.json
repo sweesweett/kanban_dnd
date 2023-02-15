@@ -71,6 +71,7 @@
         "controlComponents": ["input"]
       }
     ],
+    "no-void": ["error", { "allowAsStatement": true }],
     "react/self-closing-comp": [
       "error",
       {
