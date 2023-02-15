@@ -13,7 +13,13 @@ const ModalSelect = ({ state }: { state: string }) => {
   return (
     <>
       <Label htmlFor="state">상태</Label>
-      <SelectEl value={stateValue} name="state" id="state" required onChange={(e) => setStateValue(e.target.value)}>
+      <SelectEl
+        value={stateValue}
+        name="state"
+        id="state"
+        required
+        onInput={(e) => setStateValue(e.currentTarget.value)}
+      >
         {stateSelect?.map((option) => (
           <option value={option} key={option}>
             {option}

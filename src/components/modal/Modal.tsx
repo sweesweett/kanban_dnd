@@ -13,6 +13,7 @@ import useSearchParams from '../../hooks/useSearchParams';
 import SearchManager from './SearchManager';
 import useForm from '../../hooks/useForm';
 import ModalSelect from './ModalSelect';
+import DeleteBtn from './DeleteBtn';
 
 const Modal = () => {
   const { mode, state, id } = useSearchParams(['mode', 'state', 'id']);
@@ -43,6 +44,7 @@ const Modal = () => {
     <ModalContainer>
       <CloseBar modalTitle={mode === 'edit' ? 'Edit a card' : 'Add a card'} />
       <Form onSubmit={submitHandler}>
+        {mode === 'edit' && <DeleteBtn id={id} state={state} />}
         <Input
           type="text"
           name="title"
@@ -95,6 +97,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: relative;
 `;
 const Textarea = styled.textarea`
   width: 100%;

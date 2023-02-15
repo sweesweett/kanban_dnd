@@ -1,7 +1,8 @@
+import { DELETE_ITEM, GET_LISTS, GET_ITEM, PUT_LIST_TITLE, GET_MANAGER, POST_ITEM, PUT_ITEM } from '../graphql/lists';
 /* eslint-disable import/no-extraneous-dependencies */
 import { ListContent } from '../types/lists';
 import { graphql } from 'msw';
-import GET_LISTS, { GET_ITEM, PUT_LIST_TITLE, GET_MANAGER, POST_ITEM, PUT_ITEM } from '../graphql/lists';
+
 import { lists, managers } from './db';
 
 export const handlers = [
@@ -94,5 +95,24 @@ export const handlers = [
         item: newData,
       }),
     );
+  }),
+  graphql.mutation(DELETE_ITEM, (req, res, ctx) => {
+    const data = req.variables;
+
+    const idx = lists.findIndex(({ state: title }) => title === data.state);
+    if (idx > -1) {
+      const itemIdx = lists[idx].list.findIndex(({ id: idx }) => data.id === idx);
+      if (itemIdx > -1) {
+        lists[idx].list.splice(itemIdx, 1);
+        return res(
+          ctx.data({
+            state: lists[idx].state,
+            item: { id: data.id as string },
+          }),
+        );
+      }
+      return res(ctx.status(404));
+    }
+    return res(ctx.status(404));
   }),
 ];

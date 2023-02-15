@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import TaskList from './TaskList';
 import { graphqlFetcher, Querykeys } from '../../queryClient';
 import { useQuery } from 'react-query';
-import GET_LISTS from '../../graphql/lists';
+import { GET_LISTS } from '../../graphql/lists';
 import { List } from '../../types/lists';
 import { useRecoilState } from 'recoil';
 import { listAtom } from '../../store';

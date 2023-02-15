@@ -1,6 +1,6 @@
 import { gql } from 'graphql-tag';
 
-const GET_LISTS = gql`
+export const GET_LISTS = gql`
   query GET_LISTS {
     state
     list {
@@ -34,7 +34,8 @@ export const GET_MANAGER = gql`
   }
 `;
 export const PUT_ITEM = gql`
-  mutation PUT_ITEM($id: number, $state: string) {
+  mutation PUT_ITEM($id: string, $state: string) {
+    state
     item(id: $id) {
       id
       order
@@ -46,7 +47,8 @@ export const PUT_ITEM = gql`
   }
 `;
 export const POST_ITEM = gql`
-  mutation POST_ITEM($id: number, $state: string) {
+  mutation POST_ITEM($id: string, $state: string) {
+    state
     item {
       id
       order
@@ -57,4 +59,9 @@ export const POST_ITEM = gql`
     }
   }
 `;
-export default GET_LISTS;
+export const DELETE_ITEM = gql`
+  mutation DELETE_ITEM($id: string) {
+    state
+    id
+  }
+`;
