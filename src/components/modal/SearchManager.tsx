@@ -21,8 +21,7 @@ const SearchManager = () => {
   );
   useEffect(() => {
     if (debounce) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      refetch();
+      void refetch();
     }
   }, [debounce, refetch]);
   useEffect(() => {
