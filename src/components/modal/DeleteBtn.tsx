@@ -9,7 +9,7 @@ const DeleteBtn = ({ id, state }: { id: string; state: string }) => {
   const navigate = useNavigate();
   const queryClient = getClient();
   const fetcher = useMutation(() => graphqlFetcher(DELETE_ITEM, { id, state }), {
-    onSuccess: (data) => {
+    onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: [Querykeys.LISTS] });
       navigate('/');
     },

@@ -4,10 +4,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import App from './App';
 import GlobalStyle from './style/globalStyle';
+import { worker } from './mocks/browser';
 
 if (process.env.NODE_ENV === 'development') {
-  const { worker } = require('./mocks/browser');
-  worker.start();
+  void worker.start();
 }
 
 const rootElement = document.getElementById('root');
