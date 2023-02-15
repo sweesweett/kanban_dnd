@@ -10,7 +10,7 @@ const useForm = (mode: string) => {
   const query = useDynamicImport(mode);
   const queryClient = getClient();
   const fetcher = useMutation((data: ListContent) => graphqlFetcher(query, data), {
-    onSuccess: (data) => {
+    onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: [Querykeys.LISTS] });
       navigate('/');
     },

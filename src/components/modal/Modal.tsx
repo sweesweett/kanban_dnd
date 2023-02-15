@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import Input, { Label } from './Input';
 import CloseBar from './CloseBar';
