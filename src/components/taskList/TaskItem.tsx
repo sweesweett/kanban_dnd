@@ -1,5 +1,8 @@
+import { DragEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { dndSelector } from '../../store';
 
 const TaskItem = ({
   title,
@@ -12,25 +15,44 @@ const TaskItem = ({
   id: string;
   state: string;
 }) => {
+  const [dndDrag, setDndDrag] = useRecoilState(dndSelector('drag'));
+  const [dndDrop, setDndDrop] = useRecoilState(dndSelector('drop'));
+  const dropId = dndDrop.id === '' ? '-1' : dndDrop.id;
+  const onDragStart = () => {
+    setDndDrag({ id, state });
+  };
+  const onDragEnd = () => {
+    setDndDrop({ id, state });
+  };
   return (
-    <Link to={`/?mode=edit&state=${state}&id=${id}`}>
-      <TaskLi draggable>
-        <span>{title}</span>
-        {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
-      </TaskLi>
-    </Link>
+    <>
+      {dropId === id && dndDrag.id && dndDrag.id !== dndDrop.id && <EmptySpace />}
+      <Link to={`/?mode=edit&state=${state}&id=${id}`}>
+        <TaskLi draggable onDragStart={onDragStart} onDragEnter={onDragEnd} isActive={dropId === id}>
+          <span>{title}</span>
+          {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
+        </TaskLi>
+      </Link>
+    </>
   );
 };
-const TaskLi = styled.li`
+const TaskLi = styled.li<{ isActive: boolean }>`
   border-radius: 8px;
   padding: 12px;
   margin: 12px 4px;
   background-color: white;
   display: flex;
   flex-direction: column;
-  cursor: pointer;
-  user-select: none;
+  cursor: grab;
+  position: relative;
   font-weight: 500;
+`;
+const EmptySpace = styled.div`
+  border-radius: 8px;
+  padding: 20px 12px;
+  margin: 12px 4px;
+  background-color: rgba(192, 192, 192, 0.4);
+  content: '';
 `;
 export const CircleIcon = styled.div`
   border-radius: 50%;
