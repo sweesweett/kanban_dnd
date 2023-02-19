@@ -132,9 +132,9 @@ export const handlers = [
 
     if (!(dragStateIdx > -1 && dropStateIdx > -1)) return res(ctx.status(404));
     const dragIdIdx = lists[dragStateIdx].list.findIndex(({ id: idx }) => drag.id === idx);
-    console.log(dragIdIdx);
+
     const dropIdIdx = lists[dropStateIdx].list.findIndex(({ id: idx }) => drop.id === idx);
-    console.log(dragIdIdx, dropIdIdx);
+
     const dragItem = lists[dragStateIdx].list.splice(dragIdIdx, 1);
     if (dropIdIdx === -1) {
       lists[dropStateIdx].list.push(dragItem[0]);
