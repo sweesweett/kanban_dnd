@@ -2,13 +2,46 @@ import styled from 'styled-components';
 import TaskItem from './TaskItem';
 import TaskTitleForm from './TaskTitleForm';
 import AddTask from './AddTask';
-import { ListContent } from '../../types/lists';
-
-import { PUT_LIST_TITLE } from '../../graphql/lists';
+import { ListContent, List, Dnd } from '../../types/lists';
+import { PUT_DND, PUT_LIST_TITLE } from '../../graphql/lists';
+import { useMutation } from 'react-query';
+import { getClient, graphqlFetcher, Querykeys } from '../../queryClient';
+import { DragEvent } from 'react';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { dndAtom, dndSelector } from '../../store';
 
 const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
+  const queryClient = getClient();
+  const dndValue = useRecoilValue(dndAtom);
+  const dndValueReset = useResetRecoilState(dndAtom);
+  const fetcher = useMutation((data: Dnd) => graphqlFetcher(PUT_DND, data), {
+    onSuccess: () => {
+      dndValueReset();
+      void queryClient.invalidateQueries({ queryKey: [Querykeys.LISTS] });
+    },
+    onError: (err: string) => {
+      console.log(`Error:${err}`);
+    },
+  });
+  const onDrop = (e: DragEvent<HTMLDivElement>) => {
+    const { drag, drop } = dndValue;
+    console.log(drag, drop);
+    if (e.currentTarget.tagName !== 'LI') return;
+
+    // const { drag, drop } = dndValue;
+    if (drag.state === drop.state && drag.id === drop.id) {
+      if (drag.state !== title) {
+        fetcher.mutate({ drag, drop: { id: '', state: title } });
+      }
+    } else if (drop.state !== title) {
+      fetcher.mutate({ drag, drop: { id: '', state: title } });
+    } else {
+      fetcher.mutate(dndValue);
+    }
+  };
+
   return (
-    <TaskListContainer>
+    <TaskListContainer onDragOver={(e) => e.preventDefault()} onDrop={onDrop}>
       <TaskTitleInfo>
         <CountBadge>{list.length}</CountBadge>
         <TaskTitleForm size={16} title={title} eventName={PUT_LIST_TITLE} />

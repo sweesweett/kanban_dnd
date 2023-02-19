@@ -1,6 +1,16 @@
-import { DELETE_ITEM, GET_LISTS, GET_ITEM, PUT_LIST_TITLE, GET_MANAGER, POST_ITEM, PUT_ITEM } from '../graphql/lists';
+import {
+  PUT_DND,
+  DELETE_ITEM,
+  GET_LISTS,
+  GET_ITEM,
+  PUT_LIST_TITLE,
+  GET_MANAGER,
+  POST_ITEM,
+  PUT_ITEM,
+} from '../graphql/lists';
+
 /* eslint-disable import/no-extraneous-dependencies */
-import { ListContent } from '../types/lists';
+import { Dnd, ListContent } from '../types/lists';
 import { graphql } from 'msw';
 
 import { lists, managers } from './db';
@@ -8,7 +18,6 @@ import { lists, managers } from './db';
 export const handlers = [
   graphql.query(GET_LISTS, (req, res, ctx) => {
     return res(
-      ctx.delay(2000),
       ctx.data({
         lists,
       }),
@@ -114,5 +123,31 @@ export const handlers = [
       return res(ctx.status(404));
     }
     return res(ctx.status(404));
+  }),
+  graphql.mutation(PUT_DND, (req, res, ctx) => {
+    const data = req.variables;
+    const { drag, drop } = data as Dnd;
+    const dragStateIdx = lists.findIndex(({ state: title }) => title === drag.state);
+    const dropStateIdx = lists.findIndex(({ state: title }) => title === drop.state);
+
+    if (!(dragStateIdx > -1 && dropStateIdx > -1)) return res(ctx.status(404));
+    const dragIdIdx = lists[dragStateIdx].list.findIndex(({ id: idx }) => drag.id === idx);
+    console.log(dragIdIdx);
+    const dropIdIdx = lists[dropStateIdx].list.findIndex(({ id: idx }) => drop.id === idx);
+    console.log(dragIdIdx, dropIdIdx);
+    const dragItem = lists[dragStateIdx].list.splice(dragIdIdx, 1);
+    if (dropIdIdx === -1) {
+      lists[dropStateIdx].list.push(dragItem[0]);
+    } else {
+      lists[dropStateIdx].list.splice(dropIdIdx, 0, dragItem[0]);
+    }
+
+    return res(
+      ctx.data({
+        lists,
+      }),
+    );
+
+    // const dragStateIdx = lists.findIndex(({ state: title }) => title === drag.state);
   }),
 ];

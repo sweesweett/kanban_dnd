@@ -65,3 +65,14 @@ export const DELETE_ITEM = gql`
     id
   }
 `;
+export const PUT_DND = gql`
+  mutation PUT_DND {
+    state
+    list {
+      id
+      order
+      title
+      manager
+    }
+  }
+`;

@@ -32,3 +32,13 @@ export interface FamilyListValue {
   state: string;
   item: ListContent;
 }
+export interface DndContent {
+  [index: string]: string;
+  id: string;
+  state: string;
+}
+export interface Dnd {
+  [index: string]: DndContent;
+  drag: DndContent;
+  drop: DndContent;
+}

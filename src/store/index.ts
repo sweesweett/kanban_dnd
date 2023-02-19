@@ -1,5 +1,5 @@
-import { StateChange, List } from '../types/lists';
-import { atom, selector } from 'recoil';
+import { StateChange, List, Dnd, DndContent } from '../types/lists';
+import { atom, selector, selectorFamily } from 'recoil';
 
 export const listAtom = atom<List[]>({
   key: 'listAtom',
@@ -33,4 +33,29 @@ export const listNameSelector = selector<string[] | StateChange>({
       }),
     );
   },
+});
+
+export const dndAtom = atom<Dnd>({
+  key: 'dndAtom',
+  default: {
+    drag: { id: '', state: '' },
+    drop: { id: '', state: '' },
+  },
+});
+
+export const dndSelector = selectorFamily<DndContent | Dnd, string>({
+  key: 'dndSelector',
+  get:
+    (param: string) =>
+    ({ get }) => {
+      const data = get(dndAtom);
+      return data[param];
+    },
+  set:
+    (param: string) =>
+    ({ get, set }, value) => {
+      const data = get(dndAtom);
+      const newData = { ...data, [param]: value } as Dnd;
+      set(dndAtom, newData);
+    },
 });
