@@ -19,7 +19,6 @@ const TaskItem = ({
   const [dndDrop, setDndDrop] = useRecoilState(dndSelector('drop'));
   const dropId = dndDrop.id === '' ? '-1' : dndDrop.id;
   const onDragStart = (e: DragEvent) => {
-    console.log(e.target);
     setDndDrag({ id, state });
   };
   const onDragEnd = () => {
