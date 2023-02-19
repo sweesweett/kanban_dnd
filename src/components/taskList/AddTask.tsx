@@ -1,18 +1,25 @@
 import styled from 'styled-components';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AddTask = ({ status, textContent }: { status: string; textContent: string }) => {
-  const navigate = useNavigate();
   return (
-    <Link to={`/?mode=add&state=${status}`}>
+    <StyledLink to={`/?mode=add&state=${status}`}>
       <AddTaskBtn>
         <AiOutlinePlus size="16px" />
         <span>{textContent}</span>
       </AddTaskBtn>
-    </Link>
+    </StyledLink>
   );
 };
+
+const StyledLink = styled(Link)`
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+`;
 
 const AddTaskBtn = styled.button`
   border-radius: 3px;

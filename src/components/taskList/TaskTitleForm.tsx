@@ -45,6 +45,7 @@ const TitleForm = styled.form`
   display: inline-block;
   width: 90%;
   box-sizing: border-box;
+  -webkit-user-drag: none;
 `;
 
 const TitleInput = styled.input<{ size: number }>`

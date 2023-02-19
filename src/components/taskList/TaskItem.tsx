@@ -18,7 +18,8 @@ const TaskItem = ({
   const [dndDrag, setDndDrag] = useRecoilState(dndSelector('drag'));
   const [dndDrop, setDndDrop] = useRecoilState(dndSelector('drop'));
   const dropId = dndDrop.id === '' ? '-1' : dndDrop.id;
-  const onDragStart = () => {
+  const onDragStart = (e: DragEvent) => {
+    console.log(e.target);
     setDndDrag({ id, state });
   };
   const onDragEnd = () => {
@@ -26,7 +27,7 @@ const TaskItem = ({
   };
   return (
     <>
-      {dropId === id && dndDrag.id && dndDrag.id !== dndDrop.id && <EmptySpace />}
+      {dropId === id && dndDrag.id !== dndDrop.id && <EmptySpace />}
       <Link to={`/?mode=edit&state=${state}&id=${id}`}>
         <TaskLi draggable onDragStart={onDragStart} onDragEnter={onDragEnd} isActive={dropId === id}>
           <span>{title}</span>
