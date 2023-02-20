@@ -1,8 +1,8 @@
 import { DragEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { dndSelector } from '../../store';
+import { dndAtom, dndSelector } from '../../store';
 
 const TaskItem = ({
   title,
@@ -17,18 +17,33 @@ const TaskItem = ({
 }) => {
   const [dndDrag, setDndDrag] = useRecoilState(dndSelector('drag'));
   const [dndDrop, setDndDrop] = useRecoilState(dndSelector('drop'));
+  const reset = useResetRecoilState(dndAtom);
   const dropId = dndDrop.id === '' ? '-1' : dndDrop.id;
   const onDragStart = (e: DragEvent) => {
     setDndDrag({ id, state });
   };
-  const onDragEnd = () => {
-    setDndDrop({ id, state });
+  const onDragEnd = (e: DragEvent) => {
+    if (dndDrag.id === id) {
+      reset();
+    }
+  };
+  const onDragEnter = (e: DragEvent) => {
+    e.preventDefault();
+    if (dndDrag.id !== id) {
+      setDndDrop({ id, state });
+    }
   };
   return (
     <>
       {dropId === id && dndDrag.id !== dndDrop.id && <EmptySpace />}
       <Link to={`/?mode=edit&state=${state}&id=${id}`}>
-        <TaskLi draggable onDragStart={onDragStart} onDragEnter={onDragEnd} isActive={dropId === id}>
+        <TaskLi
+          draggable
+          onDragStart={onDragStart}
+          onDragEnd={onDragEnd}
+          onDragEnter={onDragEnter}
+          isActive={dropId === id}
+        >
           <span>{title}</span>
           {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
         </TaskLi>

@@ -127,6 +127,7 @@ export const handlers = [
   graphql.mutation(PUT_DND, (req, res, ctx) => {
     const data = req.variables;
     const { drag, drop } = data as Dnd;
+
     const dragStateIdx = lists.findIndex(({ state: title }) => title === drag.state);
     const dropStateIdx = lists.findIndex(({ state: title }) => title === drop.state);
 
