@@ -26,6 +26,7 @@ const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const { drag, drop } = dndValue;
+    console.log(drag, drop);
     if (drag.state === drop.state && drag.id === drop.id) {
       if (drag.state !== title) {
         fetcher.mutate({ drag, drop: { id: '', state: title } });

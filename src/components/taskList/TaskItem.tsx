@@ -19,31 +19,26 @@ const TaskItem = ({
   const [dndDrop, setDndDrop] = useRecoilState(dndSelector('drop'));
   const reset = useResetRecoilState(dndAtom);
   const dropId = dndDrop.id === '' ? '-1' : dndDrop.id;
-  const onDragStart = (e: DragEvent) => {
+  const onDragStart = () => {
     setDndDrag({ id, state });
   };
-  const onDragEnd = (e: DragEvent) => {
+  const onDragEnd = () => {
     if (dndDrag.id === id) {
-      reset();
+      setDndDrop({ ...dndDrag });
     }
   };
-  const onDragEnter = (e: DragEvent) => {
-    e.preventDefault();
+  const onDragEnter = () => {
     if (dndDrag.id !== id) {
       setDndDrop({ id, state });
+    } else {
+      setDndDrop({ ...dndDrag });
     }
   };
   return (
     <>
-      {dropId === id && dndDrag.id !== dndDrop.id && <EmptySpace />}
+      {dndDrop.id === id && dndDrag.id !== dndDrop.id && <EmptySpace />}
       <Link to={`/?mode=edit&state=${state}&id=${id}`}>
-        <TaskLi
-          draggable
-          onDragStart={onDragStart}
-          onDragEnd={onDragEnd}
-          onDragEnter={onDragEnter}
-          isActive={dropId === id}
-        >
+        <TaskLi draggable onDragStart={onDragStart} onDragEnd={onDragEnd} onDragEnter={onDragEnter}>
           <span>{title}</span>
           {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
         </TaskLi>
@@ -51,7 +46,7 @@ const TaskItem = ({
     </>
   );
 };
-const TaskLi = styled.li<{ isActive: boolean }>`
+const TaskLi = styled.li`
   border-radius: 8px;
   padding: 12px;
   margin: 12px 4px;
