@@ -1,8 +1,7 @@
-import { DragEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { dndAtom, dndSelector } from '../../store';
+import { dndSelector } from '../../store';
 
 const TaskItem = ({
   title,
@@ -17,8 +16,7 @@ const TaskItem = ({
 }) => {
   const [dndDrag, setDndDrag] = useRecoilState(dndSelector('drag'));
   const [dndDrop, setDndDrop] = useRecoilState(dndSelector('drop'));
-  const reset = useResetRecoilState(dndAtom);
-  const dropId = dndDrop.id === '' ? '-1' : dndDrop.id;
+
   const onDragStart = () => {
     setDndDrag({ id, state });
   };

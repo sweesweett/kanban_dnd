@@ -2,13 +2,13 @@ import styled from 'styled-components';
 import TaskItem from './TaskItem';
 import TaskTitleForm from './TaskTitleForm';
 import AddTask from './AddTask';
-import { ListContent, List, Dnd } from '../../types/lists';
+import { ListContent, Dnd } from '../../types/lists';
 import { PUT_DND, PUT_LIST_TITLE } from '../../graphql/lists';
 import { useMutation } from 'react-query';
 import { getClient, graphqlFetcher, Querykeys } from '../../queryClient';
 import { DragEvent } from 'react';
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
-import { dndAtom, dndSelector } from '../../store';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { dndAtom } from '../../store';
 
 const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
   const queryClient = getClient();
@@ -26,7 +26,6 @@ const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
   const onDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const { drag, drop } = dndValue;
-    console.log(drag, drop);
     if (drag.state === drop.state && drag.id === drop.id) {
       if (drag.state !== title) {
         fetcher.mutate({ drag, drop: { id: '', state: title } });
