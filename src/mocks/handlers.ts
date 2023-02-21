@@ -140,22 +140,31 @@ export const handlers = [
   }),
   graphql.mutation(PUT_DND, (req, res, ctx) => {
     // TODO:수정하기
-    const data = req.variables;
-    const { drag, drop } = data as Dnd;
-
-    const dragStateIdx = lists.findIndex(({ state: title }) => title === drag.state);
-    const dropStateIdx = lists.findIndex(({ state: title }) => title === drop.state);
-
+    const { drag, drop } = req.variables as Dnd;
+    const dndArr = new Array(2).fill(-1) as number[];
+    const dndIdArr = new Array(2).fill(-1) as number[];
+    lists.forEach(({ state }, idx) => {
+      if (state === drag.state) {
+        dndArr[0] = idx;
+      } else if (state === drop.state) {
+        dndArr[1] = idx;
+      }
+    });
+    const [dragStateIdx, dropStateIdx] = dndArr;
     if (!(dragStateIdx > -1 && dropStateIdx > -1)) return res(ctx.status(404));
-    const dragIdIdx = lists[dragStateIdx].list.findIndex(({ id: idx }) => drag.id === idx);
-
-    const dropIdIdx = lists[dropStateIdx].list.findIndex(({ id: idx }) => drop.id === idx);
-
-    const dragItem = lists[dragStateIdx].list.splice(dragIdIdx, 1);
-    if (dropIdIdx === -1) {
+    lists[dragStateIdx].list.forEach(({ id }, idx) => {
+      if (id === drag.id) {
+        dndIdArr[0] = idx;
+      } else if (id === drop.id) {
+        dndIdArr[1] = idx;
+      }
+    });
+    const [dragIdx, dropIdx] = dndIdArr;
+    const dragItem = lists[dragStateIdx].list.splice(dragIdx, 1);
+    if (dropIdx === -1) {
       lists[dropStateIdx].list.push(dragItem[0]);
     } else {
-      lists[dropStateIdx].list.splice(dropIdIdx, 0, dragItem[0]);
+      lists[dropStateIdx].list.splice(dropIdx, 0, dragItem[0]);
     }
 
     return res(
