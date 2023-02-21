@@ -10,7 +10,7 @@ import {
 } from '../graphql/lists';
 
 /* eslint-disable import/no-extraneous-dependencies */
-import { Dnd, ListContent } from '../types/lists';
+import { Dnd, ListContent, FormEditValue } from '../types/lists';
 import { graphql } from 'msw';
 
 import { lists, managers } from './db';
@@ -89,18 +89,32 @@ export const handlers = [
     // TODO: uuid로 변경 후 하자
   }),
   graphql.mutation(PUT_ITEM, (req, res, ctx) => {
-    const data = req.variables;
-    const idx = lists.findIndex(({ state: title }) => title === data.state);
-    const newData = { ...(delete data.state, data) };
-    const putDataIdx: number = lists[idx].list.findIndex(({ id }) => id === data.id);
-    lists[idx].list[putDataIdx] = newData as ListContent;
+    const { data, state } = req.variables as FormEditValue;
+
     const managerIdx = managers.findIndex(({ name }) => name === data.manager);
+    const idx = lists.findIndex(({ state: title }) => title === state);
+    const itemIdx: number = lists[idx].list.findIndex(({ id }) => id === data.id);
     if (managerIdx === -1) {
       managers.push({ id: managers.length + 1, name: data.manager as string });
     }
+
+    if (data.state !== state) {
+      const newIdx = lists.findIndex(({ state: title }) => title === data.state);
+      const newData = { ...(delete data.state, data) };
+      lists[idx].list.splice(itemIdx, 1);
+      lists[newIdx].list.push(newData as ListContent);
+      return res(
+        ctx.data({
+          state,
+          item: newData,
+        }),
+      );
+    }
+    const newData = { ...(delete data.state, data) };
+    lists[idx].list[itemIdx] = newData as ListContent;
     return res(
       ctx.data({
-        state: lists[idx].state,
+        state,
         item: newData,
       }),
     );
@@ -125,6 +139,7 @@ export const handlers = [
     return res(ctx.status(404));
   }),
   graphql.mutation(PUT_DND, (req, res, ctx) => {
+    // TODO:수정하기
     const data = req.variables;
     const { drag, drop } = data as Dnd;
 
