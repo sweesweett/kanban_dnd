@@ -145,7 +145,8 @@ export const handlers = [
     lists.forEach(({ state }, idx) => {
       if (state === drag.state) {
         dndArr[0] = idx;
-      } else if (state === drop.state) {
+      }
+      if (state === drop.state) {
         dndArr[1] = idx;
       }
     });
