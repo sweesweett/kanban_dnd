@@ -38,8 +38,8 @@ export const listNameSelector = selector<string[] | StateChange>({
 export const dndAtom = atom<Dnd>({
   key: 'dndAtom',
   default: {
-    drag: { id: '', state: '' },
-    drop: { id: '', state: '' },
+    drag: { id: '', state: '', order: -1 },
+    drop: { id: '', state: '', order: -1 },
   },
 });
 

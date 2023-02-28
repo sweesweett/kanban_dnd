@@ -28,10 +28,10 @@ const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
     const { drag, drop } = dndValue;
     if (drag.state === drop.state && drag.id === drop.id) {
       if (drag.state !== title) {
-        fetcher.mutate({ drag, drop: { id: '', state: title } });
+        fetcher.mutate({ drag: { id: drag.id, state: drag.state }, drop: { id: '', state: title } });
       }
     } else if (drop.state !== title) {
-      fetcher.mutate({ drag, drop: { id: '', state: title } });
+      fetcher.mutate({ drag: { id: drag.id, state: drag.state }, drop: { id: '', state: title } });
     } else {
       fetcher.mutate(dndValue);
     }
@@ -44,8 +44,15 @@ const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
         <TaskTitleForm size={16} title={title} eventName={PUT_LIST_TITLE} />
       </TaskTitleInfo>
       <TaskListUl>
-        {list.map((item) => (
-          <TaskItem key={item.id} title={item.title} state={title} manager={item.manager} id={item.id} />
+        {list.map((item, index) => (
+          <TaskItem
+            key={item.id}
+            title={item.title}
+            state={title}
+            manager={item.manager}
+            id={item.id}
+            order={item.order}
+          />
         ))}
       </TaskListUl>
       <AddTask textContent="Add a card" status={title} />

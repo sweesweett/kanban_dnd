@@ -48,7 +48,7 @@ export interface FamilyListValue {
   item: ListContent;
 }
 export interface DndContent {
-  [index: string]: string;
+  [index: string]: string | number;
   id: string;
   state: string;
 }

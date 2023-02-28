@@ -154,12 +154,19 @@ export const handlers = [
     if (!(dragStateIdx > -1 && dropStateIdx > -1)) return res(ctx.status(404));
     const dragIdIdx = lists[dragStateIdx].list.findIndex(({ id: idx }) => drag.id === idx);
     const dropIdIdx = lists[dropStateIdx].list.findIndex(({ id: idx }) => drop.id === idx);
+
     const dragItem = lists[dragStateIdx].list.splice(dragIdIdx, 1);
     if (dropIdIdx === -1) {
       lists[dropStateIdx].list.push(dragItem[0]);
     } else {
       lists[dropStateIdx].list.splice(dropIdIdx, 0, dragItem[0]);
     }
+    lists[dragStateIdx].list.forEach((el, idx) => {
+      el.order = idx;
+    });
+    lists[dropStateIdx].list.forEach((el, idx) => {
+      el.order = idx;
+    });
 
     return res(
       ctx.data({
