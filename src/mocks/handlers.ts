@@ -77,7 +77,6 @@ export const handlers = [
     const idx = lists.findIndex(({ state: title }) => title === data.state);
     const { length } = lists[idx].list;
     const newData = { ...(delete data.state, data), order: length, id };
-    console.log(newData);
     lists[idx].list.push(newData as ListContent);
     const managerIdx = managers.findIndex(({ name }) => name === data.manager);
     if (managerIdx === -1) {
