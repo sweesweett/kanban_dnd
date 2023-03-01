@@ -12,8 +12,8 @@ import {
 /* eslint-disable import/no-extraneous-dependencies */
 import { Dnd, ListContent, FormEditValue } from '../types/lists';
 import { graphql } from 'msw';
-
 import { lists, managers } from './db';
+import { v4 as uuidv4 } from 'uuid';
 
 export const handlers = [
   graphql.query(GET_LISTS, (req, res, ctx) => {
@@ -70,11 +70,14 @@ export const handlers = [
     }
     return res(ctx.status(404));
   }),
+
   graphql.mutation(POST_ITEM, (req, res, ctx) => {
+    const id = uuidv4();
     const data = req.variables;
     const idx = lists.findIndex(({ state: title }) => title === data.state);
     const { length } = lists[idx].list;
-    const newData = { ...(delete data.state, data), order: length };
+    const newData = { ...(delete data.state, data), order: length, id };
+    console.log(newData);
     lists[idx].list.push(newData as ListContent);
     const managerIdx = managers.findIndex(({ name }) => name === data.manager);
     if (managerIdx === -1) {
@@ -86,7 +89,6 @@ export const handlers = [
         item: newData as ListContent,
       }),
     );
-    // TODO: uuid로 변경 후 하자
   }),
   graphql.mutation(PUT_ITEM, (req, res, ctx) => {
     const { data, state } = req.variables as FormEditValue;
@@ -173,7 +175,5 @@ export const handlers = [
         lists,
       }),
     );
-
-    // const dragStateIdx = lists.findIndex(({ state: title }) => title === drag.state);
   }),
 ];

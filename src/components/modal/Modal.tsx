@@ -38,7 +38,7 @@ const Modal = () => {
   }, [setSearchValue, data]);
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    getFormData(e.currentTarget, id, state);
+    getFormData(e.currentTarget, state, id);
   };
   return (
     <ModalContainer>
