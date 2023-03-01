@@ -18,26 +18,21 @@ const TaskItem = ({
 }) => {
   const [dndDrag, setDndDrag] = useRecoilState(dndSelector('drag'));
   const [dndDrop, setDndDrop] = useRecoilState(dndSelector('drop'));
-
   const onDragStart = () => {
     setDndDrag({ id, state, order });
   };
   const onDragEnd = () => {
-    console.log(dndDrag.order, dndDrop.order);
     if (dndDrag.id === id) {
       setDndDrop({ ...dndDrag });
     }
-    console.log(previewHandler());
   };
   const onDragEnter = () => {
-    console.log(id, state);
     if (dndDrag.id !== id) {
       setDndDrop({ id, state, order });
     } else {
       setDndDrop({ ...dndDrag });
     }
   };
-  // TODO:EmptySpace 부분 어떻게 해야할지 생각해보기
   const previewHandler = () => {
     if (dndDrag.state !== dndDrop.state) {
       return 'top';

@@ -51,9 +51,10 @@ export interface DndContent {
   [index: string]: string | number;
   id: string;
   state: string;
+  order: number;
 }
 export interface Dnd {
-  [index: string]: DndContent;
-  drag: DndContent;
-  drop: DndContent;
+  [index: string]: Partial<DndContent>;
+  drag: Partial<DndContent>;
+  drop: Partial<DndContent>;
 }
