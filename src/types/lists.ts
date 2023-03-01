@@ -54,7 +54,10 @@ export interface DndContent {
   order: number;
 }
 export interface Dnd {
-  [index: string]: Partial<DndContent>;
-  drag: Partial<DndContent>;
-  drop: Partial<DndContent>;
+  [index: string]: DndContent;
+  drag: DndContent;
+  drop: DndContent;
+}
+export interface MutationDnd {
+  [index: string]: Omit<DndContent, 'order'>;
 }

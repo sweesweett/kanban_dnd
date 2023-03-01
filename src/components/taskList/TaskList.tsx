@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import TaskItem from './TaskItem';
 import TaskTitleForm from './TaskTitleForm';
 import AddTask from './AddTask';
-import { ListContent, Dnd } from '../../types/lists';
+import { ListContent, MutationDnd } from '../../types/lists';
 import { PUT_DND, PUT_LIST_TITLE } from '../../graphql/lists';
 import { useMutation } from 'react-query';
 import { getClient, graphqlFetcher, Querykeys } from '../../queryClient';
@@ -14,7 +14,7 @@ const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
   const queryClient = getClient();
   const dndValue = useRecoilValue(dndAtom);
   const dndValueReset = useResetRecoilState(dndAtom);
-  const fetcher = useMutation((data: Dnd) => graphqlFetcher(PUT_DND, data), {
+  const fetcher = useMutation((data: MutationDnd) => graphqlFetcher(PUT_DND, data), {
     onSuccess: () => {
       dndValueReset();
       void queryClient.invalidateQueries({ queryKey: [Querykeys.LISTS] });

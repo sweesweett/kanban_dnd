@@ -43,7 +43,7 @@ export const dndAtom = atom<Dnd>({
   },
 });
 
-export const dndSelector = selectorFamily<DndContent | Dnd, string>({
+export const dndSelector = selectorFamily<Dnd[string] | Dnd, string>({
   key: 'dndSelector',
   get:
     (param: string) =>
