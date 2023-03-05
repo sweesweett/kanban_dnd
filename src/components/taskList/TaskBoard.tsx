@@ -4,26 +4,35 @@ import { graphqlFetcher, Querykeys } from '../../queryClient';
 import { useQuery } from 'react-query';
 import { GET_LISTS } from '../../graphql/lists';
 import { List } from '../../types/lists';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { listAtom } from '../../store';
 import Loading from '../Loading';
+import { Suspense, useEffect } from 'react';
 
 const TaskBoard = () => {
-  const [boardValue, setBoardValue] = useRecoilState(listAtom);
-  const { isLoading } = useQuery<{ lists: List[] }>(Querykeys.LISTS, () => graphqlFetcher(GET_LISTS), {
-    onSuccess: (data) => {
-      setBoardValue(data.lists);
-    },
+  const { data } = useQuery<{ lists: List[] }>(Querykeys.LISTS, () => graphqlFetcher(GET_LISTS), {
+    suspense: true,
   });
+  const [boardListValue, setBoardListValue] = useRecoilState(listAtom);
+  // TODO: setBoardValue 수정하기- list값만 가져오도록
+  useEffect(() => {
+    if (data) {
+      setBoardListValue(data.lists.map(({ state }) => state));
+
+      // setBoardListValue();
+    }
+  }, [data, setBoardListValue]);
   return (
     <TaskBoardWrapper>
       <TaskBoardTitle>칸반보드</TaskBoardTitle>
       <TaskListWrapper>
-        {boardValue?.map((lists) => (
-          <TaskList key={lists.state} title={lists.state} list={lists.list} />
+        {data?.lists.map((lists, idx) => (
+          <Suspense fallback={<Loading />} key={lists.state}>
+            <TaskList title={boardListValue[idx]} list={lists.list} />
+          </Suspense>
         ))}
       </TaskListWrapper>
-      {isLoading && <Loading />}
+      {/* {isLoading && <Loading />} */}
     </TaskBoardWrapper>
   );
 };

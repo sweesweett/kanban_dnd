@@ -5,14 +5,16 @@ import { useMutation } from 'react-query';
 import { RequestDocument } from 'graphql-request';
 import { useSetRecoilState } from 'recoil';
 import { listNameSelector } from '../../store';
+import { StateChange } from '../../types/lists';
 
 const TaskTitleForm = ({ size, title, eventName }: { size: number; title: string; eventName: RequestDocument }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const setTitles = useSetRecoilState(listNameSelector);
-  const fetcher = useMutation((newState: string) => graphqlFetcher(eventName, { state: title, newState }), {
+  const fetcher = useMutation((data: StateChange) => graphqlFetcher(eventName, data), {
     onSuccess: (data) => {
-      const { state } = data as { state: string };
-      setTitles({ state: title, newState: state });
+      const { state } = data as Pick<StateChange, 'state'>;
+      const newData: StateChange = { state: title, newState: state };
+      setTitles(newData);
     },
     onError: (err: string) => {
       console.log(`Error:${err}`);
@@ -24,15 +26,16 @@ const TaskTitleForm = ({ size, title, eventName }: { size: number; title: string
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const title = e.currentTarget.titleVal as HTMLFormElement;
-    const titleValue = title.value as string;
-    fetcher.mutate(titleValue);
+    const titleEl = e.currentTarget.titleVal as HTMLInputElement;
+    const titleValue = titleEl.value;
+    const newData: StateChange = { state: title, newState: titleValue };
+    fetcher.mutate(newData);
   };
   const blurHandler = (e: FocusEvent<HTMLInputElement, Element>) => {
     if (e.target.value === title) {
       return;
     }
-    fetcher.mutate(e.target.value);
+    fetcher.mutate({ state: title, newState: e.target.value });
   };
   return (
     <TitleForm onSubmit={submitHandler}>

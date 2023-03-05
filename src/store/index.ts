@@ -1,7 +1,7 @@
 import { StateChange, List, Dnd, DndContent } from '../types/lists';
 import { atom, selector, selectorFamily } from 'recoil';
 
-export const listAtom = atom<List[]>({
+export const listAtom = atom<string[]>({
   key: 'listAtom',
   default: [],
 });
@@ -12,26 +12,17 @@ export const SearchAtom = atom<string>({
 export const listNameSelector = selector<string[] | StateChange>({
   key: 'listNameSelector',
   get: ({ get }) => {
-    const getLists = get(listAtom);
-    const listNames = getLists.map(({ state }) => state);
-    return listNames;
+    return get(listAtom);
   },
   set: ({ get, set }, value) => {
     const { state, newState } = value as StateChange;
-    const getLists = get(listAtom);
-    const listNames = get(listNameSelector) as string[];
-    const idx = listNames.indexOf(state);
-    set(
-      listAtom,
-      getLists.map((list) => {
-        if (list.state === listNames[idx]) {
-          const newList = { ...list };
-          newList.state = newState;
-          return newList;
-        }
-        return list;
-      }),
-    );
+    const newData = get(listAtom).map((el) => {
+      if (el === state) {
+        return newState;
+      }
+      return el;
+    });
+    set(listAtom, newData);
   },
 });
 
