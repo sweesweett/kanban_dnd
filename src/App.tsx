@@ -4,6 +4,7 @@ import { getClient } from './queryClient';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import ModalWrapper from './components/modal/ModalWrapper';
 import useSearchParams from './hooks/useSearchParams';
+import SuspenseWrapper from './components/SuspenseWrapper';
 
 const App = () => {
   const queryClient = getClient();
@@ -11,7 +12,9 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TaskBoard />
+      <SuspenseWrapper>
+        <TaskBoard />
+      </SuspenseWrapper>
       {mode && <ModalWrapper />}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>

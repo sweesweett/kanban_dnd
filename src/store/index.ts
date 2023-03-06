@@ -1,4 +1,4 @@
-import { StateChange, List, Dnd, DndContent } from '../types/lists';
+import { StateChange, Dnd } from '../types/lists';
 import { atom, selector, selectorFamily } from 'recoil';
 
 export const listAtom = atom<string[]>({

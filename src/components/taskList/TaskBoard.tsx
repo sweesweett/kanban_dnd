@@ -8,18 +8,16 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { listAtom } from '../../store';
 import Loading from '../Loading';
 import { Suspense, useEffect } from 'react';
+import SuspenseWrapper from '../SuspenseWrapper';
 
 const TaskBoard = () => {
   const { data } = useQuery<{ lists: List[] }>(Querykeys.LISTS, () => graphqlFetcher(GET_LISTS), {
     suspense: true,
   });
   const [boardListValue, setBoardListValue] = useRecoilState(listAtom);
-  // TODO: setBoardValue 수정하기- list값만 가져오도록
   useEffect(() => {
     if (data) {
       setBoardListValue(data.lists.map(({ state }) => state));
-
-      // setBoardListValue();
     }
   }, [data, setBoardListValue]);
   return (
@@ -27,11 +25,10 @@ const TaskBoard = () => {
       <TaskBoardTitle>칸반보드</TaskBoardTitle>
       <TaskListWrapper>
         {data?.lists.map((lists, idx) => (
-          <Suspense fallback={<Loading />} key={lists.state}>
-            <TaskList title={boardListValue[idx]} list={lists.list} />
-          </Suspense>
+          <TaskList key={lists.state} title={boardListValue[idx]} list={lists.list} />
         ))}
       </TaskListWrapper>
+
       {/* {isLoading && <Loading />} */}
     </TaskBoardWrapper>
   );
