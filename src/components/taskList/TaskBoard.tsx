@@ -4,15 +4,14 @@ import { graphqlFetcher, Querykeys } from '../../queryClient';
 import { useQuery } from 'react-query';
 import { GET_LISTS } from '../../graphql/lists';
 import { List } from '../../types/lists';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { listAtom } from '../../store';
-import Loading from '../Loading';
-import { Suspense, useEffect } from 'react';
-import SuspenseWrapper from '../SuspenseWrapper';
+import { useEffect } from 'react';
 
 const TaskBoard = () => {
   const { data } = useQuery<{ lists: List[] }>(Querykeys.LISTS, () => graphqlFetcher(GET_LISTS), {
     suspense: true,
+    useErrorBoundary: true,
   });
   const [boardListValue, setBoardListValue] = useRecoilState(listAtom);
   useEffect(() => {
