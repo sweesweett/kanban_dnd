@@ -19,9 +19,10 @@ export const handlers = [
   graphql.query(GET_LISTS, (req, res, ctx) => {
     return res(
       ctx.delay(2000),
-      ctx.data({
-        lists,
-      }),
+      ctx.status(404),
+      // ctx.data({
+      //   lists,
+      // }),
     );
   }),
 

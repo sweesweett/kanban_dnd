@@ -4,7 +4,10 @@ import { getClient } from './queryClient';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import ModalWrapper from './components/modal/ModalWrapper';
 import useSearchParams from './hooks/useSearchParams';
-import SuspenseWrapper from './components/SuspenseWrapper';
+import { Suspense } from 'react';
+import Loading from './components/Loading';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorIndicator from './components/ErrorIndicator';
 
 const App = () => {
   const queryClient = getClient();
@@ -12,9 +15,11 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SuspenseWrapper>
-        <TaskBoard />
-      </SuspenseWrapper>
+      <ErrorBoundary FallbackComponent={ErrorIndicator}>
+        <Suspense fallback={<Loading />}>
+          <TaskBoard />
+        </Suspense>
+      </ErrorBoundary>
       {mode && <ModalWrapper />}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
