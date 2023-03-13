@@ -24,7 +24,6 @@ const Modal = () => {
     () => graphqlFetcher(GET_ITEM, { id, state }),
     {
       enabled: !!id,
-      suspense: true,
     },
   );
   // TODO: 모달 컴포넌트  리액트쿼리 option 더 알아보고 리팩토링 하기

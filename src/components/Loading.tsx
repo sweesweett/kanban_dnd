@@ -32,7 +32,6 @@ const LoadingCircle = styled.div`
   height: 15%;
   max-height: 50px;
   border-radius: 50%;
-  /* box-shadow: inset -1px -2px 30px rgba(0, 0, 0, 0.1); */
   &:nth-last-child(1) {
     background-color: #7ae5e0;
     animation: loading 1.2s 0.3s ease-in-out infinite;
