@@ -27,8 +27,6 @@ const TaskBoard = () => {
           <TaskList key={lists.state} title={boardListValue[idx]} list={lists.list} />
         ))}
       </TaskListWrapper>
-
-      {/* {isLoading && <Loading />} */}
     </TaskBoardWrapper>
   );
 };

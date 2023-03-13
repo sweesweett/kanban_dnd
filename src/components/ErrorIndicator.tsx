@@ -1,11 +1,15 @@
 import styled from 'styled-components';
+import { GrPowerReset } from 'react-icons/gr';
 
-const ErrorIndicator = () => {
+const ErrorIndicator = ({ onClickHandler }: { onClickHandler: () => void }) => {
   return (
     <ErrorWrapper>
       <ErrorContent>
         <p>예상하지 못한 문제가 발생했어요!</p>
-        <button type="button">다시 시도하기</button>
+        <ErrorContentBtn type="button" onClick={onClickHandler}>
+          <GrPowerReset size={16} />
+          <span>다시 시도하기</span>
+        </ErrorContentBtn>
       </ErrorContent>
     </ErrorWrapper>
   );
@@ -26,7 +30,7 @@ const ErrorContent = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.4);
   border-radius: 8px;
   min-width: 300px;
   width: 50vw;
@@ -36,5 +40,14 @@ const ErrorContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 20px;
+  font-weight: 700;
+`;
+const ErrorContentBtn = styled.button`
+  display: flex;
+  align-items: center;
+  border-radius: 1px solid black;
+  padding: 8px;
+  gap: 12px;
 `;
 export default ErrorIndicator;

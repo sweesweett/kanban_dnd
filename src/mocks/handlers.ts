@@ -18,11 +18,9 @@ import { v4 as uuidv4 } from 'uuid';
 export const handlers = [
   graphql.query(GET_LISTS, (req, res, ctx) => {
     return res(
-      ctx.delay(2000),
-      ctx.status(404),
-      // ctx.data({
-      //   lists,
-      // }),
+      ctx.data({
+        lists,
+      }),
     );
   }),
 

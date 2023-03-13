@@ -1,5 +1,5 @@
 import TaskBoard from './components/taskList/TaskBoard';
-import { QueryClientProvider } from 'react-query';
+import { QueryClientProvider, useQueryErrorResetBoundary } from 'react-query';
 import { getClient } from './queryClient';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import ModalWrapper from './components/modal/ModalWrapper';
@@ -12,17 +12,35 @@ import ErrorIndicator from './components/ErrorIndicator';
 const App = () => {
   const queryClient = getClient();
   const { mode } = useSearchParams(['mode']);
-
+  const { reset } = useQueryErrorResetBoundary();
   return (
     <QueryClientProvider client={queryClient}>
-      <ErrorBoundary FallbackComponent={ErrorIndicator}>
+      <ErrorBoundary
+        onReset={reset}
+        fallbackRender={({ resetErrorBoundary }) => <ErrorIndicator onClickHandler={() => resetErrorBoundary()} />}
+      >
         <Suspense fallback={<Loading />}>
           <TaskBoard />
         </Suspense>
       </ErrorBoundary>
+
       {mode && <ModalWrapper />}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };
 export default App;
+// const { reset } = useQueryErrorResetBoundary();
+// return (
+//   <ErrorBoundary
+//     onReset={reset}
+//     fallbackRender={({ resetErrorBoundary }) => (
+//       <div>
+//         There was an error!
+//         <Button onClick={() => resetErrorBoundary()}>Try again</Button>
+//       </div>
+//     )}
+//   >
+//     <Page />
+//   </ErrorBoundary>
+// );
