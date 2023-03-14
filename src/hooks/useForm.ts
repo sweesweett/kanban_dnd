@@ -22,6 +22,7 @@ const useForm = (mode: string) => {
     const formObj = Object.fromEntries(formData.entries());
     if (mode === 'add') {
       fetcher.mutate({ ...formObj } as Partial<FormAddValue>);
+      // TODO: as 지양하기 위해 코드 수정 필 근데 여기서는 필요하지 않을까?
     } else if (mode === 'edit') {
       fetcher.mutate({ data: { ...formObj, id }, state } as FormEditValue);
     }

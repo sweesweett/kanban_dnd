@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Label } from './Input';
 import { useRecoilValue } from 'recoil';
-import { listNameSelector } from '../../store';
+import { listAtom } from '../../store';
 
 const ModalSelect = ({ state }: { state: string }) => {
   const [stateValue, setStateValue] = useState<string>(state);
-  const stateSelect = useRecoilValue(listNameSelector) as string[];
+  const stateSelect = useRecoilValue(listAtom);
   useEffect(() => {
     setStateValue(state);
   }, [state]);

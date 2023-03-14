@@ -12,17 +12,24 @@ export const SearchAtom = atom<string>({
 export const listNameSelector = selector<string[] | StateChange>({
   key: 'listNameSelector',
   get: ({ get }) => {
-    return get(listAtom);
+    const getListName = get(listAtom);
+    if (Array.isArray(get(listAtom))) {
+      return getListName;
+    }
+
+    return [];
   },
   set: ({ get, set }, value) => {
-    const { state, newState } = value as StateChange;
-    const newData = get(listAtom).map((el) => {
-      if (el === state) {
-        return newState;
-      }
-      return el;
-    });
-    set(listAtom, newData);
+    if ('state' in value) {
+      const { state, newState } = value;
+      const newData = get(listAtom).map((el) => {
+        if (el === state) {
+          return newState;
+        }
+        return el;
+      });
+      set(listAtom, newData);
+    }
   },
 });
 
@@ -34,19 +41,21 @@ export const dndAtom = atom<Dnd>({
   },
 });
 
-export const dndSelector = selectorFamily<Dnd[string] | Dnd, string>({
+export const dndSelector = selectorFamily<Dnd[string] | Dnd, 'drag' | 'drop'>({
   key: 'dndSelector',
   get:
-    (param: string) =>
+    (param) =>
     ({ get }) => {
       const data = get(dndAtom);
       return data[param];
     },
   set:
-    (param: string) =>
+    (param) =>
     ({ get, set }, value) => {
       const data = get(dndAtom);
-      const newData = { ...data, [param]: value } as Dnd;
-      set(dndAtom, newData);
+      if (!('drag' in value) && 'state' in value) {
+        const newData = { ...data, [param]: value };
+        set(dndAtom, newData);
+      }
     },
 });

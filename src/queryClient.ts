@@ -21,7 +21,7 @@ export const getClient = (() => {
 })();
 const BASE_URL = '/';
 
-export const graphqlFetcher = (query: RequestDocument, variables = {}) => request(BASE_URL, query, variables);
+export const graphqlFetcher = (query: RequestDocument, variables: object = {}) => request(BASE_URL, query, variables);
 export const Querykeys = {
   LISTS: 'LISTS',
   ITEM: 'ITEM',
