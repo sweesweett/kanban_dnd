@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { graphqlFetcher, Querykeys } from '../../queryClient';
 import { useQuery } from 'react-query';
 import { GET_ITEM } from '../../graphql/lists';
-import { ListContent } from '../../types/lists';
+import { FamilyListValue } from '../../types/lists';
 import { useSetRecoilState } from 'recoil';
 import { SearchAtom } from '../../store';
 import useSearchParams from '../../hooks/useSearchParams';
@@ -14,19 +14,26 @@ import SearchManager from './SearchManager';
 import useForm from '../../hooks/useForm';
 import ModalSelect from './ModalSelect';
 import DeleteBtn from './DeleteBtn';
+import { ClientError } from 'graphql-request/dist/types';
 
 const Modal = () => {
   const { mode, state, id } = useSearchParams(['mode', 'state', 'id']);
   const setSearchValue = useSetRecoilState(SearchAtom);
   const navigate = useNavigate();
-  const { data } = useQuery<{ item: ListContent }>(
+  const { data } = useQuery<Pick<FamilyListValue, 'item'>, ClientError>(
     [Querykeys.ITEM, id, state],
     () => graphqlFetcher(GET_ITEM, { id, state }),
     {
       enabled: !!id,
+      retry: false,
+      onError: (err) => {
+        if (err.response.status === 404) {
+          navigate('/');
+          // TODO:사용자에게 안내해줄만한 무언가가 필요한 것 같다!
+        }
+      },
     },
   );
-  // TODO: 모달 컴포넌트  리액트쿼리 option 더 알아보고 리팩토링 하기
   const { getFormData } = useForm(mode);
   useEffect(() => {
     if (data) {
