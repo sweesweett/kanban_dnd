@@ -6,30 +6,25 @@ import { RequestDocument } from 'graphql-request';
 import { useSetRecoilState } from 'recoil';
 import { listNameSelector } from '../../store';
 import { StateChange } from '../../types/lists';
-import { GraphQLResponse } from 'graphql-request/dist/types';
 
 const TaskTitleForm = ({ size, title, eventName }: { size: number; title: string; eventName: RequestDocument }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const setTitles = useSetRecoilState(listNameSelector);
-  const fetcher = useMutation<Partial<StateChange>, GraphQLResponse, StateChange>(
-    (data) => graphqlFetcher(eventName, data),
-    {
-      onSuccess: (data) => {
-        const { state } = data;
-        // TODO:as 날리는 방법 찾기...
-        if (state) {
-          const newData: StateChange = { state: title, newState: state };
-          setTitles(newData);
-        }
-      },
-      onError: (err) => {
-        console.log(`Error:${err.status}`);
-        if (inputRef.current) {
-          inputRef.current.value = title;
-        }
-      },
+  const fetcher = useMutation((data: StateChange) => graphqlFetcher(eventName, data), {
+    onSuccess: (data) => {
+      const { state } = data as Pick<StateChange, 'state'>;
+      // TODO:as 날리는 방법 찾기...
+      if (state) {
+        const newData: StateChange = { state: title, newState: state };
+        setTitles(newData);
+      }
     },
-  );
+    onError: () => {
+      if (inputRef.current) {
+        inputRef.current.value = title;
+      }
+    },
+  });
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

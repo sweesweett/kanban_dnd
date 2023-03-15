@@ -20,7 +20,7 @@ const useForm = (mode: string) => {
   const getFormData = (form: HTMLFormElement, state: string, id: string) => {
     const formData = new FormData(form);
     const formObj = Object.fromEntries(formData.entries());
-    if (mode === 'add') {
+    if (mode === 'add' && 'data' in formObj) {
       fetcher.mutate({ ...formObj } as Partial<FormAddValue>);
       // TODO: as 지양하기 위해 코드 수정 필 근데 여기서는 필요하지 않을까?
     } else if (mode === 'edit') {

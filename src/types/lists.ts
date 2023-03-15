@@ -15,7 +15,7 @@ export interface FormAddValue {
   content: string;
   endDate: string;
   manager: string | null;
-  state?: string | undefined;
+  state: string | undefined;
 }
 
 export interface FormEditValue {
@@ -41,6 +41,10 @@ export interface StateChange {
   [index: string]: string;
   state: string;
   newState: string;
+}
+export interface GetItemReq {
+  id: string;
+  state: string;
 }
 export interface FamilyListValue {
   [index: string]: string | ListContent;
