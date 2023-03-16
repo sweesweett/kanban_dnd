@@ -7,15 +7,8 @@ export interface ListContent {
   endDate: string;
   manager: string | null;
 }
-export interface FormAddValue {
-  [index: string]: number | string | null | undefined;
-  id: string;
-  order: number;
-  title: string;
-  content: string;
-  endDate: string;
-  manager: string | null;
-  state: string | undefined;
+export interface FormAddValue extends ListContent {
+  state: string;
 }
 
 export interface FormEditValue {

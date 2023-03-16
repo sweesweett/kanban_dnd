@@ -17,14 +17,20 @@ const useForm = (mode: string) => {
       console.log(`Error:${err}`);
     },
   });
+
+  const isEditForm = (
+    form: { [index: string]: string | null | number | undefined },
+    id: string,
+  ): form is FormAddValue => {
+    return !!id;
+  };
   const getFormData = (form: HTMLFormElement, state: string, id: string) => {
-    const formData = new FormData(form);
-    const formObj = Object.fromEntries(formData.entries());
-    if (mode === 'add' && 'data' in formObj) {
-      fetcher.mutate({ ...formObj } as Partial<FormAddValue>);
-      // TODO: as 지양하기 위해 코드 수정 필 근데 여기서는 필요하지 않을까?
-    } else if (mode === 'edit') {
-      fetcher.mutate({ data: { ...formObj, id }, state } as FormEditValue);
+    const formData = new FormData(form).entries();
+    const formObj = Object.fromEntries(formData) as Partial<FormAddValue>;
+    if (isEditForm(formObj, id)) {
+      fetcher.mutate({ data: { ...formObj, id }, state });
+    } else {
+      fetcher.mutate({ ...formObj });
     }
   };
   return { getFormData };

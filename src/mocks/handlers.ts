@@ -15,7 +15,6 @@ import { graphql } from 'msw';
 import { lists, managers } from './db';
 import { v4 as uuidv4 } from 'uuid';
 
-// graphql.mutation<LoginMutation, LoginMutationVariables>(
 export const handlers = [
   graphql.query('GET_LISTS', (req, res, ctx) => {
     return res(
@@ -34,7 +33,6 @@ export const handlers = [
         return res(ctx.status(404, 'Not found'));
       }
       return res(
-        ctx.delay(2000),
         ctx.data({
           state: itemState,
           item: lists[stateIdx].list[id],
@@ -74,13 +72,12 @@ export const handlers = [
   }),
 
   graphql.mutation<FamilyListValue, FormAddValue>('POST_ITEM', (req, res, ctx) => {
-    // TODO:코드 수정
-
     const id = uuidv4();
     const data = req.variables;
     const idx = lists.findIndex(({ state: title }) => title === data.state);
     const { length } = lists[idx].list;
-    const newData = { ...(delete data.state, data), order: length, id } as ListContent;
+    const newData: ListContent = { ...data, order: length, id };
+    delete newData.state;
     lists[idx].list.push(newData);
     const managerIdx = managers.findIndex(({ name }) => name === data.manager);
     if (managerIdx === -1 && data.manager !== null) {
@@ -95,17 +92,20 @@ export const handlers = [
   }),
   graphql.mutation<FamilyListValue, FormEditValue>('PUT_ITEM', (req, res, ctx) => {
     const { data, state } = req.variables;
+    if (data.manager !== null) {
+      const managerIdx = managers.findIndex(({ name }) => name === data.manager);
+      if (managerIdx === -1) {
+        managers.push({ id: managers.length + 1, name: data.manager });
+      }
+    }
 
-    const managerIdx = managers.findIndex(({ name }) => name === data.manager);
     const idx = lists.findIndex(({ state: title }) => title === state);
     const itemIdx: number = lists[idx].list.findIndex(({ id }) => id === data.id);
-    if (managerIdx === -1 && data.manager !== null) {
-      managers.push({ id: managers.length + 1, name: data.manager });
-    }
-    // TODO:타입 에러, 수정 필수: manager null일때 고려해야함
+
     if (data.state !== state) {
       const newIdx = lists.findIndex(({ state: title }) => title === data.state);
-      const newData = { ...(delete data.state, data) } as ListContent;
+      const newData: ListContent = { ...data };
+      delete newData.state;
       lists[idx].list.splice(itemIdx, 1);
       lists[newIdx].list.push(newData);
       return res(
@@ -115,7 +115,8 @@ export const handlers = [
         }),
       );
     }
-    const newData = { ...(delete data.state, data) } as ListContent;
+    const newData: ListContent = { ...data };
+    delete newData.state;
     lists[idx].list[itemIdx] = newData;
     return res(
       ctx.data({
@@ -124,7 +125,7 @@ export const handlers = [
       }),
     );
   }),
-  graphql.mutation('DELETE_ITEM', (req, res, ctx) => {
+  graphql.mutation<{ state: string; id: string }, GetItemReq>('DELETE_ITEM', (req, res, ctx) => {
     const data = req.variables;
     const idx = lists.findIndex(({ state: title }) => title === data.state);
     if (idx > -1) {
@@ -134,7 +135,7 @@ export const handlers = [
         return res(
           ctx.data({
             state: lists[idx].state,
-            item: { id: data.id as string },
+            id: data.id,
           }),
         );
       }
