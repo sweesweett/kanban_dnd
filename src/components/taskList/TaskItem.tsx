@@ -43,15 +43,18 @@ const TaskItem = ({
     return 'bottom';
   };
   return (
-    <LinkStyled to={`/?mode=edit&state=${state}&id=${id}`} position={previewHandler()}>
-      <TaskLi draggable onDragStart={onDragStart} onDragEnd={onDragEnd} onDragEnter={onDragEnter}>
-        <span>{title}</span>
-        {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
-      </TaskLi>
-      {dndDrop.id === id && dndDrag.id !== dndDrop.id && <EmptySpace />}
-    </LinkStyled>
+    <TaskLi draggable onDragStart={onDragStart} onDragEnd={onDragEnd} onDragEnter={onDragEnter}>
+      <LinkStyled to={`/?mode=edit&state=${state}&id=${id}`} position={previewHandler()}>
+        <TaskLiContent>
+          <span>{title}</span>
+          {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
+        </TaskLiContent>
+        {dndDrop.id === id && dndDrag.id !== dndDrop.id && <EmptySpace />}
+      </LinkStyled>
+    </TaskLi>
   );
 };
+
 const LinkStyled = styled(Link)<{ position: 'top' | 'bottom' }>`
   display: flex;
   flex-direction: ${({ position }) => (position === 'top' ? 'column-reverse' : 'column')};
@@ -59,13 +62,16 @@ const LinkStyled = styled(Link)<{ position: 'top' | 'bottom' }>`
   cursor: initial;
 `;
 const TaskLi = styled.li`
+  cursor: grab;
+  margin: 12px 4px;
+`;
+const TaskLiContent = styled.div`
   border-radius: 8px;
   padding: 12px;
-  margin: 12px 4px;
+
   background-color: white;
   display: flex;
   flex-direction: column;
-  cursor: grab;
   position: relative;
   font-weight: 500;
 `;
