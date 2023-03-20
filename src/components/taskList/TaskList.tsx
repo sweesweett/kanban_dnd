@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import TaskItem from './TaskItem';
 import TaskTitleForm from './TaskTitleForm';
 import AddTask from './AddTask';
+import { DragEvent } from 'react';
 import { ListContent, MutationDnd } from '../../types/lists';
 import { PUT_DND, PUT_LIST_TITLE } from '../../graphql/lists';
 import { useMutation } from 'react-query';
 import { getClient, graphqlFetcher, Querykeys } from '../../queryClient';
-import { DragEvent } from 'react';
+
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { dndAtom } from '../../store';
 

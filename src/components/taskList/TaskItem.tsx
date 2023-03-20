@@ -1,26 +1,25 @@
+import { ForwardedRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { dndSelector } from '../../store';
+import { Dnd } from '../../types/lists';
 
-const TaskItem = ({
-  title,
-  manager,
-  id,
-  state,
-  order,
-}: {
+interface TaskItemProps {
   title: string;
   manager: string | null;
   id: string;
   state: string;
   order: number;
-}) => {
+}
+const TaskItem = ({ title, manager, id, state, order }: TaskItemProps, ref: ForwardedRef<Dnd>) => {
   const [dndDrag, setDndDrag] = useRecoilState(dndSelector('drag'));
   const [dndDrop, setDndDrop] = useRecoilState(dndSelector('drop'));
+
   const onDragStart = () => {
     setDndDrag({ id, state, order });
   };
+
   const onDragEnd = () => {
     if (dndDrag.id === id) {
       setDndDrop({ ...dndDrag });
@@ -55,20 +54,19 @@ const TaskItem = ({
   );
 };
 
-const LinkStyled = styled(Link)<{ position: 'top' | 'bottom' }>`
+const LinkStyled = styled(Link)<{ position: 'top' | 'bottom' | undefined }>`
   display: flex;
   flex-direction: ${({ position }) => (position === 'top' ? 'column-reverse' : 'column')};
   -webkit-user-drag: none;
   cursor: initial;
 `;
 const TaskLi = styled.li`
-  cursor: grab;
   margin: 12px 4px;
 `;
 const TaskLiContent = styled.div`
   border-radius: 8px;
   padding: 12px;
-
+  cursor: grab;
   background-color: white;
   display: flex;
   flex-direction: column;
