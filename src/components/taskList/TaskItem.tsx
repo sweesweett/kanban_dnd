@@ -1,9 +1,7 @@
-import { ForwardedRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { dndSelector } from '../../store';
-import { Dnd } from '../../types/lists';
 
 interface TaskItemProps {
   title: string;
@@ -12,7 +10,7 @@ interface TaskItemProps {
   state: string;
   order: number;
 }
-const TaskItem = ({ title, manager, id, state, order }: TaskItemProps, ref: ForwardedRef<Dnd>) => {
+const TaskItem = ({ title, manager, id, state, order }: TaskItemProps) => {
   const [dndDrag, setDndDrag] = useRecoilState(dndSelector('drag'));
   const [dndDrop, setDndDrop] = useRecoilState(dndSelector('drop'));
 

@@ -7,7 +7,6 @@ import { ListContent, MutationDnd } from '../../types/lists';
 import { PUT_DND, PUT_LIST_TITLE } from '../../graphql/lists';
 import { useMutation } from 'react-query';
 import { getClient, graphqlFetcher, Querykeys } from '../../queryClient';
-
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { dndAtom } from '../../store';
 

@@ -42,15 +42,15 @@ export const handlers = [
     return res(ctx.status(404, 'Not found'));
   }),
   graphql.query<Managers, { searchString: string }>('GET_MANAGER', (req, res, ctx) => {
-    const searchVal = req.variables.searchString;
-    if (!searchVal) {
+    const { searchString } = req.variables;
+    if (!searchString) {
       return res(
         ctx.data({
           managers: [],
         }),
       );
     }
-    const newData = managers.filter(({ name }) => name.includes(searchVal));
+    const newData = managers.filter(({ name }) => name.includes(searchString));
     return res(
       ctx.data({
         managers: newData,
@@ -119,6 +119,7 @@ export const handlers = [
     delete newData.state;
     lists[idx].list[itemIdx] = newData;
     return res(
+      ctx.delay(2000),
       ctx.data({
         state,
         item: newData,
