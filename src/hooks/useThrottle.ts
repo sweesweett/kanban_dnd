@@ -17,7 +17,7 @@ const useThrottle = (click: boolean, delay = 2000) => {
     return () => {
       clearTimeout(handler);
     };
-  }, [click, delay, throttle]);
+  }, [click, delay]);
   return throttle;
 };
 export default useThrottle;
