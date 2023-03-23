@@ -1,7 +1,3 @@
-// const path = require('path');
-// const webpack = require('webpack');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -13,7 +9,7 @@ const config = {
   devtool: 'inline-source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[hash].bundle.js',
+    filename: '[chunkhash].bundle.js',
     publicPath: '/',
   },
   resolve: {

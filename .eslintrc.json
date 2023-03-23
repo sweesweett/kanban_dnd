@@ -3,6 +3,7 @@
     "airbnb",
     "airbnb/hooks",
     "prettier",
+    "@typescript-eslint/parser",
     "plugin:react/recommended",
     "plugin:prettier/recommended",
     "plugin:react-hooks/recommended",
@@ -12,7 +13,8 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "project": ["./tsconfig.json"]
+    "tsconfigRooDir": "/",
+    "project": ["./tsconfig.json", "./eslintrc.json"]
   },
   "plugins": ["@typescript-eslint", "prettier"],
   "env": {

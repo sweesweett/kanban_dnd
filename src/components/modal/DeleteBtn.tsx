@@ -21,6 +21,11 @@ const DeleteBtn = ({ id, state }: { id: string; state: string }) => {
       console.log(`Error:${err}`);
     },
   });
+  useEffect(() => {
+    if (!throttle) {
+      setIsThrottle(false);
+    }
+  }, [throttle]);
   const deleteHandler = () => {
     if (!throttle) {
       setIsThrottle(true);
