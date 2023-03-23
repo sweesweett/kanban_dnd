@@ -13,7 +13,6 @@ const TaskTitleForm = ({ size, title, eventName }: { size: number; title: string
   const fetcher = useMutation((data: StateChange) => graphqlFetcher(eventName, data), {
     onSuccess: (data) => {
       const { state } = data as Pick<StateChange, 'state'>;
-      // TODO:as 날리는 방법 찾기...
       if (state) {
         const newData: StateChange = { state: title, newState: state };
         setTitles(newData);
@@ -41,7 +40,15 @@ const TaskTitleForm = ({ size, title, eventName }: { size: number; title: string
   };
   return (
     <TitleForm onSubmit={submitHandler}>
-      <TitleInput name="titleVal" onBlur={blurHandler} type="text" size={size} defaultValue={title} ref={inputRef} />
+      <TitleInput
+        name="titleVal"
+        onBlur={blurHandler}
+        type="text"
+        size={size}
+        defaultValue={title}
+        ref={inputRef}
+        maxLength={12}
+      />
     </TitleForm>
   );
 };

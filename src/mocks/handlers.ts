@@ -134,6 +134,7 @@ export const handlers = [
       if (itemIdx > -1) {
         lists[idx].list.splice(itemIdx, 1);
         return res(
+          ctx.delay(2000),
           ctx.data({
             state: lists[idx].state,
             id: data.id,

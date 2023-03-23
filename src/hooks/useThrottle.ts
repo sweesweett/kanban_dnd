@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-const useThrottle = (click: boolean, delay = 2000) => {
+const useThrottle = (click: boolean, delay = 500) => {
   const [throttle, setThrottle] = useState(false);
   const timeRef = useRef(Date.now());
   useEffect(() => {
