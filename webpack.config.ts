@@ -6,10 +6,10 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 const config = {
   mode: 'production',
   entry: './src/index.tsx',
-  devtool: 'inline-source-map',
+  devtool: false,
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[chunkhash].bundle.js',
+    filename: '[contenthash].bundle.js',
     publicPath: '/',
   },
   resolve: {
