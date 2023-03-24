@@ -4,7 +4,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 const config = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/index.tsx',
   devtool: 'inline-source-map',
   output: {
