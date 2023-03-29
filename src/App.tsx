@@ -8,6 +8,7 @@ import { Suspense } from 'react';
 import Loading from './components/Loading';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorIndicator from './components/ErrorIndicator';
+import ThemeToggle from './components/ThemeToggle';
 
 const App = () => {
   const queryClient = getClient();
@@ -23,7 +24,7 @@ const App = () => {
           <TaskBoard />
         </Suspense>
       </ErrorBoundary>
-
+      <ThemeToggle />
       {mode && <ModalWrapper />}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
