@@ -89,6 +89,8 @@ const ModalContainer = styled.div`
   border-radius: 4px;
   padding: 28px 20px;
   animation: open 0.3s ease-out 1 forwards;
+  background-color: ${({ theme }) => theme.modalBg};
+  color: ${({ theme }) => theme.color};
   @keyframes open {
     0% {
       transform: scale(0.5);
@@ -111,6 +113,8 @@ const Textarea = styled.textarea`
   resize: none;
   height: 100px;
   border: none;
+  color: ${({ theme }) => theme.color};
+  background-color: ${({ theme }) => theme.listBg};
   :focus {
     outline: 2px solid rgba(0, 0, 0, 0.3);
   }

@@ -65,11 +65,12 @@ const TaskLiContent = styled.div`
   border-radius: 8px;
   padding: 12px;
   cursor: grab;
-  background-color: white;
+  background-color: ${({ theme }) => theme.itemBg};
   display: flex;
   flex-direction: column;
   position: relative;
   font-weight: 500;
+  color: ${({ theme }) => theme.color};
 `;
 const EmptySpace = styled.div`
   border-radius: 8px;
@@ -82,7 +83,7 @@ export const CircleIcon = styled.div`
   border-radius: 50%;
   width: 20px;
   height: 20px;
-  background-color: #77d8d4;
+  background-color: ${({ theme }) => theme.toggleBg};
   align-self: flex-end;
   font-size: 14px;
   font-weight: 700;

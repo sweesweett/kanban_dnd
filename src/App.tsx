@@ -9,23 +9,29 @@ import Loading from './components/Loading';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorIndicator from './components/ErrorIndicator';
 import ThemeToggle from './components/ThemeToggle';
-
+import { ThemeProvider } from 'styled-components';
+import useTheme from './hooks/useTheme';
+import GlobalStyle from './style/globalStyle';
 const App = () => {
   const queryClient = getClient();
   const { mode } = useSearchParams(['mode']);
   const { reset } = useQueryErrorResetBoundary();
+  const theme = useTheme();
   return (
     <QueryClientProvider client={queryClient}>
-      <ErrorBoundary
-        onReset={reset}
-        fallbackRender={({ resetErrorBoundary }) => <ErrorIndicator onClickHandler={() => resetErrorBoundary()} />}
-      >
-        <Suspense fallback={<Loading />}>
-          <TaskBoard />
-        </Suspense>
-      </ErrorBoundary>
-      <ThemeToggle />
-      {mode && <ModalWrapper />}
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <ErrorBoundary
+          onReset={reset}
+          fallbackRender={({ resetErrorBoundary }) => <ErrorIndicator onClickHandler={() => resetErrorBoundary()} />}
+        >
+          <Suspense fallback={<Loading />}>
+            <TaskBoard />
+          </Suspense>
+        </ErrorBoundary>
+        <ThemeToggle />
+        {mode && <ModalWrapper />}
+      </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

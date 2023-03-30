@@ -192,7 +192,7 @@ button {
   position: absolute;
   top: 0;
   left: 0;
-  background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+  background-image: ${({ theme }) => theme.background};
   width: 100%;
   height: 100%;
 }

@@ -38,6 +38,7 @@ const TaskBoardTitle = styled.h2`
   font-size: 24px;
   font-weight: 700;
   margin: 12px;
+  color: ${({ theme }) => theme.color};
 `;
 const TaskListWrapper = styled.div`
   margin: 20px;

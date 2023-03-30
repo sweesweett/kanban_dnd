@@ -1,11 +1,16 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import { BsFillSunFill, BsMoonStarsFill } from 'react-icons/bs';
+import { useRecoilState } from 'recoil';
+import { themeSelector } from '../store';
 const ThemeToggle = () => {
-  const [isToggled, setIsToggled] = useState(false);
+  const [theme, setTheme] = useRecoilState(themeSelector);
   return (
-    <ToggleWrapper isToggled={isToggled}>
-      <ToggleBtn onClick={() => setIsToggled(!isToggled)} isToggled={isToggled} />
+    <ToggleWrapper
+      onClick={() => {
+        setTheme('');
+      }}
+    >
+      <ToggleBtn themeMode={theme} />
       <ToggleIcons>
         <BsFillSunFill size={16} color={'white'} />
         <BsMoonStarsFill size={16} color={'black'} />
@@ -13,8 +18,8 @@ const ThemeToggle = () => {
     </ToggleWrapper>
   );
 };
-const ToggleWrapper = styled.div<{ isToggled: boolean }>`
-  background-color: ${({ isToggled }) => (isToggled ? 'gray' : '#a8edea')};
+const ToggleWrapper = styled.div`
+  background-color: ${({ theme }) => theme.toggleBg};
   width: 60px;
   height: 30px;
   position: fixed;
@@ -30,8 +35,9 @@ const ToggleIcons = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0 8px;
+  cursor: pointer;
 `;
-const ToggleBtn = styled.div<{ isToggled: boolean }>`
+const ToggleBtn = styled.div<{ themeMode: string }>`
   content: '';
   width: 30px;
   height: 30px;
@@ -40,7 +46,7 @@ const ToggleBtn = styled.div<{ isToggled: boolean }>`
   border-radius: 50%;
   left: 0;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-  transform: translateX(${({ isToggled }) => (isToggled ? '30px' : '0')});
+  transform: translateX(${({ themeMode }) => (themeMode === 'dark' ? '30px' : '0')});
   transition: transform 0.5s;
   cursor: pointer;
   z-index: 1;

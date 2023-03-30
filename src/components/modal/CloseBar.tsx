@@ -25,7 +25,8 @@ const CloseBarWrapper = styled.div`
   align-items: center;
   padding: 4px 8px;
   font-weight: 700;
-  background-color: #f2f2f2;
+  background-color: ${(props) => props.theme.modalBg};
+  color: ${(props) => props.theme.color};
   border-radius: 4px 4px 0 0;
 `;
 const CloseBtn = styled.button`

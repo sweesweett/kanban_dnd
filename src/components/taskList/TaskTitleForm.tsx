@@ -65,9 +65,10 @@ const TitleInput = styled.input<{ size: number }>`
   display: inline-block;
   font-size: ${({ size }) => size || 16}px;
   font-weight: 700;
+  color: ${({ theme }) => theme.color};
   cursor: pointer;
   :focus {
-    background-color: #fff;
+    /* background-color: #fff; */
     cursor: text;
   }
 `;

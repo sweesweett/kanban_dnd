@@ -59,3 +59,22 @@ export const dndSelector = selectorFamily<Dnd[string] | Dnd, 'drag' | 'drop'>({
       }
     },
 });
+
+const themeAtom = atom<string>({
+  key: 'themeAtom',
+  default: 'light',
+});
+export const themeSelector = selector({
+  key: 'themeSelector',
+  get: ({ get }) => {
+    return get(themeAtom);
+  },
+  set: ({ get, set }) => {
+    const currentTheme = get(themeAtom);
+    if (currentTheme === 'light') {
+      set(themeAtom, 'dark');
+    } else if (currentTheme === 'dark') {
+      set(themeAtom, 'light');
+    }
+  },
+});

@@ -14,9 +14,10 @@ export const Label = styled.label`
 `;
 const InputEl = styled.input`
   margin-left: 20px;
+  color: ${({ theme }) => theme.color};
   font-size: ${(props) => (props.size ? props.size : 16)}px;
   :focus {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: ${({ theme }) => theme.listBg};
     outline: 2px solid rgba(0, 0, 0, 0.3);
   }
 `;

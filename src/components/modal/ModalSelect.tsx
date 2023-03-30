@@ -33,6 +33,8 @@ const ModalSelect = ({ state }: { state: string }) => {
 const SelectEl = styled.select`
   padding: 8px;
   border: none;
+  color: ${({ theme }) => theme.color};
+  background-color: ${({ theme }) => theme.listBg};
   :focus {
     outline: 2px solid rgba(0, 0, 0, 0.3);
   }

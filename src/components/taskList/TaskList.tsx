@@ -62,7 +62,7 @@ const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
 const TaskListContainer = styled.div`
   width: 300px;
   padding: 16px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: ${({ theme }) => theme.listBg};
   border-radius: 8px;
   box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
   height: max-content;
@@ -79,7 +79,7 @@ const CountBadge = styled.span`
   height: 24px;
   line-height: 24px;
   font-weight: 700;
-  background-color: #f39db8;
+  background-color: ${({ theme }) => theme.empColor};
   color: white;
   text-align: center;
 `;

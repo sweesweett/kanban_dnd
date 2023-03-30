@@ -71,13 +71,14 @@ const DropLi = styled.li`
   padding: 4px;
   border-radius: 15px;
   font-size: 14px;
-  background-color: white;
+  color: ${({ theme }) => theme.color};
+  background-color: ${({ theme }) => theme.itemBg};
   font-weight: 500;
-  border: 3px solid #fed6e3;
+  border: 3px solid ${({ theme }) => theme.borderBg};
   cursor: pointer;
   :hover,
   :active {
-    border: 3px solid #ffb2cb;
+    border: 3px solid ${({ theme }) => theme.empColor};
   }
 `;
 export default SearchManager;

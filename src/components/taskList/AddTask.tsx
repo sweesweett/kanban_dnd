@@ -32,6 +32,7 @@ const AddTaskBtn = styled.button`
   align-items: center;
   gap: 10px;
   font-weight: 700;
+  color: ${({ theme }) => theme.color};
   cursor: pointer;
   :hover,
   :active {
