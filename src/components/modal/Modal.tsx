@@ -69,10 +69,10 @@ const Modal = () => {
         />
         <SearchManager />
         <ModalBtns>
-          <Button color="#a8edea" type="submit">
+          <Button btnRole="submit" type="submit">
             저장
           </Button>
-          <Button color="#fed6e3" type="button" onClick={() => navigate('/')}>
+          <Button btnRole="cancel" type="button" onClick={() => navigate('/')}>
             취소
           </Button>
         </ModalBtns>
@@ -126,11 +126,12 @@ const Textarea = styled.textarea`
 const ModalBtns = styled.div`
   align-self: center;
 `;
-const Button = styled.button<{ color: string }>`
+const Button = styled.button<{ btnRole: string }>`
   display: inline-block;
   padding: 12px;
   margin: 0 8px 0 10px;
   font-weight: 700;
-  background-color: ${({ color }) => color || 'none'};
+  background-color: ${({ btnRole, theme }) => (btnRole === 'submit' ? theme.submitBtnBg : theme.cancelBtnBg)};
+  color: ${({ theme }) => theme.color};
 `;
 export default Modal;

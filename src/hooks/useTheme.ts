@@ -14,6 +14,8 @@ const darkTheme = {
   empColor: '#09203f',
   badgeBg: '#77d8d4',
   borderBg: '#17415F',
+  submitBtnBg: '#09203f',
+  cancelBtnBg: 'gray',
 };
 const lightTheme = {
   background: 'linear-gradient(to top, #a8edea 0%, #fed6e3 100%);',
@@ -26,6 +28,8 @@ const lightTheme = {
   empColor: '#f39db8',
   badgeBg: '#77d8d4',
   borderBg: '#fed6e3',
+  submitBtnBg: '#a8edea',
+  cancelBtnBg: '#fed6e3',
 };
 //  ${(props) => props.theme.bg}
 const useTheme = () => {
