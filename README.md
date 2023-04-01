@@ -139,7 +139,85 @@ Typesript, React, Styled-components, Recoil, React-query, GraphQL
     `useThrottle` 커스텀 훅을 통해, 폼 제출 시 연속으로 클릭 시 발생할 수 있는 문제를 처리하였습니다.
 
 - 드래그 앤 드롭 기능 구현
-  - 목록에서 Drag & Drop 이벤트를 활용하여 task 순서, 상태 변경
+
+  - drag&drop 이벤트를 통해 기능을 구현하였습니다.
+
+    ```
+      //TaskItem 컴포넌트
+      const TaskItem = ({ title, manager, id, state, order }: TaskItemProps) => {
+      const [dndDrag, setDndDrag] = useRecoilState(dndSelector('drag'));
+      const [dndDrop, setDndDrop] = useRecoilState(dndSelector('drop'));
+
+      const onDragStart = () => {
+        setDndDrag({ id, state, order });
+      };
+
+      const onDragEnd = () => {
+        if (dndDrag.id === id) {
+          setDndDrop({ ...dndDrag });
+        }
+      };
+      const onDragEnter = () => {
+        if (dndDrag.id !== id) {
+          setDndDrop({ id, state, order });
+        } else {
+          setDndDrop({ ...dndDrag });
+        }
+      };
+      const previewHandler = () => {
+        if (dndDrag.state !== dndDrop.state) {
+          return 'top';
+        }
+        if (dndDrag.order > dndDrop.order) {
+          return 'top';
+        }
+        return 'bottom';
+      };
+      return (
+        <TaskLi draggable onDragStart={onDragStart} onDragEnd={onDragEnd} onDragEnter={onDragEnter}>
+          <LinkStyled to={`/?mode=edit&state=${state}&id=${id}`} position={previewHandler()}>
+            <TaskLiContent>
+              <span>{title}</span>
+              {manager && <CircleIcon>{manager.slice(0, 1)}</CircleIcon>}
+            </TaskLiContent>
+            {dndDrop.id === id && dndDrag.id !== dndDrop.id && <EmptySpace />}
+          </LinkStyled>
+        </TaskLi>
+      );
+    };
+
+    ```
+
+    ```
+    //TaskList 컴포넌트
+    const TaskList = ({ title, list }: { title: string; list: ListContent[] }) => {
+    const dndValue = useRecoilValue(dndAtom);
+    const dndValueReset = useResetRecoilState(dndAtom);
+    const onDrop = (e: DragEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      const { drag, drop } = dndValue;
+      if (drag.state === drop.state && drag.id === drop.id) {
+        if (drag.state !== title) {
+          fetcher.mutate({ drag: { id: drag.id, state: drag.state }, drop: { id: '', state: title } });
+        }
+      } else if (drop.state !== title) {
+        fetcher.mutate({ drag: { id: drag.id, state: drag.state }, drop: { id: '', state: title } });
+      } else {
+        fetcher.mutate(dndValue);
+      }
+    };
+
+    return (
+      <TaskListContainer onDragOver={(e) => e.preventDefault()} onDrop={onDrop}>
+      {...}
+      </TaskListContainer>
+    );
+    };
+    ```
+
+    **리랜더링 이슈**  
+    드래그를 할 때 마다 발생하는 리랜더링 문제로 DataTransfer,useRef,useState를 통해 수정하려 했으나, 기존의 위치 미리보기를 구현하지 못해 recoil을 사용하여 구현하였습니다.
+
 - 다크모드/라이트 모드 구현  
    `styled-components`의 `ThemeProvider`를 사용했고, `useTheme`이라는 훅을 통해 토글에 따라 테마가 변하도록 처리하였습니다.
 
