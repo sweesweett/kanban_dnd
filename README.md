@@ -28,7 +28,7 @@ npm run start
 
 ### 💛 기술 스택
 
-Typesript, React, Styled-components, Recoil, React-query, GraphQL
+Typescript, React, Styled-components, Recoil, React-query, GraphQL
 
 ### 💚 구현 내용
 
